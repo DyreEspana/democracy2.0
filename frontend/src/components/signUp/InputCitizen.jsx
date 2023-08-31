@@ -163,7 +163,9 @@ const InputCitizen = ({
                     setIncomes={setIncomes}/>
                 <div className={"submitDivButtons row"}>
                     <button type="reset">reset</button>
-                    <button type="submit">submit</button>
+                    {!existsByUsername ?
+                        <button type="submit">submit</button>
+                        : ""}
                 </div>
             </form>
         </div>

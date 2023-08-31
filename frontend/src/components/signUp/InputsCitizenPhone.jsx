@@ -2,9 +2,10 @@ import countryInformationDE from "./CountryInformationDE.jsx";
 import "../../pages/signUp/SignUp.css";
 import {useEffect, useState} from "react";
 
-const InputsCitizenPhone = ({phone, handlePhoneNumber, handleAreaCode, handleChange, BACKEND_SIGN_UP}) => {
-
-    const [existsByPhone, setExistsByPhone] = useState(false);
+const InputsCitizenPhone = ({
+                                phone, handlePhoneNumber, handleAreaCode, handleChange,
+                                BACKEND_SIGN_UP, existsByPhone, setExistsByPhone
+                            }) => {
 
     console.log("phone.phoneNumber: " + phone.phoneNumber)
     console.log(phone)
@@ -79,7 +80,7 @@ const InputsCitizenPhone = ({phone, handlePhoneNumber, handleAreaCode, handleCha
                 <select
                     name={"phoneNumber"} id={"areaCode"}
                     required={true}
-                    onChange={handleAreaCode}
+                    onChange={handleChange}
                 >
                     <option value={""}>--select your area code--</option>
                     {countryInformationDE.map((country, index) =>
@@ -89,13 +90,13 @@ const InputsCitizenPhone = ({phone, handlePhoneNumber, handleAreaCode, handleCha
                 </select>
             </label>
             <label>
-                {!existsByPhone ? "phone phoneNumber" :
+                {!existsByPhone ? "phone number" :
                     <span className={"inputTaken"}>phone number is taken!</span>}
                 <input type="text"
                        name="phoneNumber" id="phoneNumber"
                        required={true}
                        value={phone.phoneNumber}
-                       onChange={handlePhoneNumber}
+                       onChange={handleChange}
                 />
             </label>
         </div>

@@ -15,6 +15,7 @@ const RegistrationCitizenMail = ({mails, setMails, BACKEND_SIGN_UP}) => {
     const [isEditPressed, setIsEditPressed] = useState([]);
     const [isOneEditPressed, setIsOneEditPressed] = useState(false);
 
+    const [existsByMail, setExistsByMail] = useState(false);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -86,10 +87,14 @@ const RegistrationCitizenMail = ({mails, setMails, BACKEND_SIGN_UP}) => {
                                     eMail={eMail}
                                     handleChange={handleChange}
                                     BACKEND_SIGN_UP={BACKEND_SIGN_UP}
+                                    existsByMail={existsByMail}
+                                    setExistsByMail={setExistsByMail}
                                 />
-                                <button className={"saveUpdateCitizenDetails"}
-                                        onClick={event => saveEdit(event, index)}>save
-                                </button>
+                                {!existsByMail ?
+                                    <button className={"saveUpdateCitizenDetails"}
+                                            onClick={event => saveEdit(event, index)}>save
+                                    </button>
+                                    : ""}
                             </div> : ""}
                     </div>) : ""}
             {isAddPressed ?
@@ -98,10 +103,14 @@ const RegistrationCitizenMail = ({mails, setMails, BACKEND_SIGN_UP}) => {
                         eMail={eMail}
                         handleChange={handleChange}
                         BACKEND_SIGN_UP={BACKEND_SIGN_UP}
+                        existsByMail={existsByMail}
+                        setExistsByMail={setExistsByMail}
                     />
-                    <button className={"saveUpdateCitizenDetails"}
-                            onClick={handleSubmit}>save
-                    </button>
+                    {!existsByMail ?
+                        <button className={"saveUpdateCitizenDetails"}
+                                onClick={handleSubmit}>save
+                        </button>
+                        : ""}
                 </div>
                 : !isOneEditPressed ?
                     <button className={"addNewCitizenDetail"}

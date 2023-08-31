@@ -1,9 +1,7 @@
 import "../../pages/signUp/SignUp.css";
 import {useEffect, useState} from "react";
 
-const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP}) => {
-
-    const [existsByMail, setExistsByMail] = useState(false);
+const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, setExistsByMail}) => {
 
     const fetchMail = (mail) => {
         if (mail.length !== 0) {

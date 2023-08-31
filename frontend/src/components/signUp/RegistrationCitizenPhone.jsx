@@ -11,10 +11,14 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
         phoneNumber: ""
     });
 
+    console.log(phone);
+
     const [isPhoneOkToAdd, setIsPhoneOkToAdd] = useState(false);
     const [isAddPressed, setIsAddPressed] = useState(false);
     const [isEditPressed, setIsEditPressed] = useState([]);
     const [isOneEditPressed, setIsOneEditPressed] = useState(false);
+
+    const [existsByPhone, setExistsByPhone] = useState(false);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -24,25 +28,34 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
 
     const handleChange = event => {
         const {name, value} = event.target;
-        setPhone((prevState) => ({...prevState, [name]: value}));
-    };
-
-
-    const handlePhoneNumber = event => {
-        const {name, value} = event.target;
-        if (phone.phoneNumber.includes("+")) {
-            console.log("phone includes +")
-            setPhone(prevState => ({...prevState, [name]: value}));
-        } else {
+        if (name === "phoneNumber" && !phone.phoneNumber.includes("+")) {
             setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
+        } else if (name === "phoneNumber" && value.includes("+")) {
+            setPhone(prevState => ({...prevState, [name]: " "}));
+            setPhone(prevState => ({...prevState, [name]: value + " "}));
+        } else {
+            setPhone((prevState) => ({...prevState, [name]: value}));
         }
-    }
-
-    const handleAreaCode = event => {
-        const {name, value} = event.target;
-        setPhone(prevState => ({...prevState, [name]: " "}));
-        setPhone(prevState => ({...prevState, [name]: value + " "}));
     };
+
+    /*
+        const handlePhoneNumber = event => {
+            const {name, value} = event.target;
+            if (phone.phoneNumber.includes("+")) {
+                console.log("phone includes +")
+                setPhone(prevState => ({...prevState, [name]: value}));
+            } else {
+                setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
+            }
+        }
+
+        const handleAreaCode = event => {
+            const {name, value} = event.target;
+            setPhone(prevState => ({...prevState, [name]: " "}));
+            setPhone(prevState => ({...prevState, [name]: value + " "}));
+        };
+
+     */
 
     const handleAdd = () => {
         setIsAddPressed(true);
@@ -101,28 +114,36 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
                             <div className={"column"}>
                                 <InputsCitizenPhone
                                     phone={phone}
-                                    handlePhoneNumber={handlePhoneNumber}
-                                    handleAreaCode={handleAreaCode}
+                                    // handlePhoneNumber={handlePhoneNumber}
+                                    // handleAreaCode={handleAreaCode}
                                     handleChange={handleChange}
                                     BACKEND_SIGN_UP={BACKEND_SIGN_UP}
+                                    existsByPhone={existsByPhone}
+                                    setExistsByPhone={setExistsByPhone}
                                 />
-                                <button className={"saveUpdateCitizenDetails"}
-                                        onClick={event => saveEdit(event, index)}>save
-                                </button>
+                                {!existsByPhone ?
+                                    <button className={"saveUpdateCitizenDetails"}
+                                            onClick={event => saveEdit(event, index)}>save
+                                    </button>
+                                    : ""}
                             </div> : ""}
                     </div>) : ""}
             {isAddPressed ?
                 <div className={"column"}>
                     <InputsCitizenPhone
                         phone={phone}
-                        handlePhoneNumber={handlePhoneNumber}
-                        handleAreaCode={handleAreaCode}
+                        // handlePhoneNumber={handlePhoneNumber}
+                        // handleAreaCode={handleAreaCode}
                         handleChange={handleChange}
                         BACKEND_SIGN_UP={BACKEND_SIGN_UP}
+                        existsByPhone={existsByPhone}
+                        setExistsByPhone={setExistsByPhone}
                     />
-                    <button className={"saveUpdateCitizenDetails"}
-                            onClick={handleSubmit}>save
-                    </button>
+                    {!existsByPhone ?
+                        <button className={"saveUpdateCitizenDetails"}
+                                onClick={handleSubmit}>save
+                        </button>
+                        : ""}
                 </div>
                 : !isOneEditPressed ?
                     <button className={"addNewCitizenDetail"}
