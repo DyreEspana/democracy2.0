@@ -34,7 +34,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @EnableConfigurationProperties(RsaKeyProperties.class)
 public class SecurityConfiguration {
 
@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/username").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/mail").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/phone").permitAll();
+                    //auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/auth/sign-in").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/auth/sign-in/authorized").authenticated();
                     auth.requestMatchers(HttpMethod.PUT, "/citizen/edit").hasAnyAuthority("CITIZEN");

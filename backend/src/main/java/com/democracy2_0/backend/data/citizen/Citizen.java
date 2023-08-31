@@ -1,13 +1,16 @@
 package com.democracy2_0.backend.data.citizen;
 
 
-import com.democracy2_0.backend.data.citizen.residence.Residence;
 import com.democracy2_0.backend.data.citizen.contact.Mail;
 import com.democracy2_0.backend.data.citizen.contact.Phone;
 import com.democracy2_0.backend.data.citizen.income.Income;
+import com.democracy2_0.backend.data.citizen.residence.Residence;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,10 +23,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Citizen {
+    private final LocalDateTime registrationDate = LocalDateTime.now();
     @Id
     @GeneratedValue
     private Long id;
-    private final LocalDateTime registrationDate = LocalDateTime.now();
     private LocalDateTime editDate;
     private String gender;
     @Column(unique = true)
@@ -40,19 +43,19 @@ public class Citizen {
     private Set<String> authorities;
     //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Residence.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Residence.class, fetch = FetchType.EAGER)
     private Set<Residence> residences;
     //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Mail.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Mail.class, fetch = FetchType.EAGER)
     private Set<Mail> mails;
     //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Phone.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Phone.class, fetch = FetchType.EAGER)
     private Set<Phone> phones;
     //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Income.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Income.class, fetch = FetchType.EAGER)
     private List<Income> incomes;
 
 
