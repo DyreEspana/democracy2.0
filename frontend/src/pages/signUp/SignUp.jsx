@@ -52,22 +52,28 @@ const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLogged
                 .catch(error => {
                     console.error("Error: ", error);
                 });
-
-            const headers = new Headers();
-            const auth = Buffer.from(citizen.username + ":" + citizen.password).toString("base64");
-            headers.set("Authorization", "Basic " + auth);
-            return fetch(BACKEND_SIGN_UP, {method: "GET", headers: headers})
-                .then(response => response.text())
-                .then(jwt => {
-                    if (!jwt) {
-                        console.error("no token");
-                        return;
-                    }
-                    localStorage.setItem("jwt", jwt);
-                })
-                .catch(error => console.log("ERROR: " + error));
         }
     };
+
+    const getToken = () => {
+        const headers = new Headers();
+        const auth = Buffer.from(citizen.username + ":" + citizen.password).toString("base64");
+        headers.set("Authorization", "Basic " + auth);
+        return fetch(BACKEND_SIGN_UP, {method: "GET", headers: headers})
+            .then(response => response.text())
+            .then(jwt => {
+                if (!jwt) {
+                    console.error("no token");
+                    return;
+                }
+                localStorage.setItem("jwt", jwt);
+            })
+            .catch(error => console.log("ERROR: " + error));
+    }
+
+    useEffect(() => {
+        getToken().then(response => console.log("get token, response: " + response));
+    }, [isCitizenRegistered])
 
     isCitizenRegistered &&
     setTimeout(navigate, timeToRedirect * 1000, "/dashboard");
