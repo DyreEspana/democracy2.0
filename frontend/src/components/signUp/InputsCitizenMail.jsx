@@ -1,5 +1,5 @@
+import {useEffect} from "react";
 import "../../pages/signUp/SignUp.css";
-import {useEffect, useState} from "react";
 
 const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, setExistsByMail}) => {
 
@@ -26,32 +26,34 @@ const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, 
     }, [eMail.mail])
 
     return (<>
-            <label>
-                main e-mail?
-                <select
-                    name="isMain" id="isMain"
-                    required={true}
-                    value={eMail.isMain}
-                    onChange={handleChange}
-                >
-                    <option value={""}>--main e-mail?--</option>
-                    <option value={true}>yes</option>
-                    <option value={false}>no</option>
-                </select>
-            </label>
-            <label>
-                permission to contact?
-                <select
-                    name="permissionToContact" id="permissionToContact"
-                    required={true}
-                    value={eMail.permissionToContact}
-                    onChange={handleChange}
-                >
-                    <option value={""}>--permission to contact?--</option>
-                    <option value={true}>yes</option>
-                    <option value={false}>no</option>
-                </select>
-            </label>
+            <div className={"row"}>
+                <label>
+                    main e-mail?
+                    <select
+                        name="isMain" id="isMain"
+                        required={true}
+                        value={eMail.isMain}
+                        onChange={handleChange}
+                    >
+                        <option value={""}>-- select --</option>
+                        <option value={true}>yes</option>
+                        <option value={false}>no</option>
+                    </select>
+                </label>
+                <label>
+                    permission to contact?
+                    <select
+                        name="permissionToContact" id="permissionToContact"
+                        required={true}
+                        value={eMail.permissionToContact}
+                        onChange={handleChange}
+                    >
+                        <option value={""}>-- select --</option>
+                        <option value={true}>yes</option>
+                        <option value={false}>no</option>
+                    </select>
+                </label>
+            </div>
             <label>
                 {!existsByMail ? "e-mail" :
                     <span className={"inputTaken"}>e-mail is taken!</span>}

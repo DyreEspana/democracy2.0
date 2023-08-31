@@ -1,14 +1,11 @@
+import {useEffect} from "react";
 import countryInformationDE from "./CountryInformationDE.jsx";
 import "../../pages/signUp/SignUp.css";
-import {useEffect, useState} from "react";
 
 const InputsCitizenPhone = ({
-                                phone, handlePhoneNumber, handleAreaCode, handleChange,
+                                phone, handleChange,
                                 BACKEND_SIGN_UP, existsByPhone, setExistsByPhone
                             }) => {
-
-    console.log("phone.phoneNumber: " + phone.phoneNumber)
-    console.log(phone)
 
     const fetchPhone = (phone) => {
         if (phone.length !== 0) {
@@ -41,7 +38,7 @@ const InputsCitizenPhone = ({
                 value={phone.phoneType}
                 onChange={handleChange}
             >
-                <option value={""}>--select your phone type--</option>
+                <option value={""}>-- select --</option>
                 <option value={"MOBILE"}>mobile</option>
                 <option value={"PHONE"}>phone</option>
             </select>
@@ -55,7 +52,7 @@ const InputsCitizenPhone = ({
                     value={phone.isMain}
                     onChange={handleChange}
                 >
-                    <option value={""}>--main phone number?--</option>
+                    <option value={""}>-- select --</option>
                     <option value={true}>yes</option>
                     <option value={false}>no</option>
                 </select>
@@ -68,7 +65,7 @@ const InputsCitizenPhone = ({
                     value={phone.permissionToContact}
                     onChange={handleChange}
                 >
-                    <option value={""}>--permission to contact?--</option>
+                    <option value={""}>-- select --</option>
                     <option value={true}>yes</option>
                     <option value={false}>no</option>
                 </select>
@@ -82,10 +79,10 @@ const InputsCitizenPhone = ({
                     required={true}
                     onChange={handleChange}
                 >
-                    <option value={""}>--select your area code--</option>
+                    <option value={""}>-- select --</option>
                     {countryInformationDE.map((country, index) =>
                         <option key={index}
-                                value={country.areaCode}>{country.flag} {country.name} {country.areaCode}</option>
+                                value={country.areaCode}>{country.flag} {country.areaCode}</option>
                     )}
                 </select>
             </label>

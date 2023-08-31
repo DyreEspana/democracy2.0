@@ -12,7 +12,7 @@ const InputsCitizenResidence = ({residence, handleChange}) => {
                         value={residence.residenceType}
                         onChange={handleChange}
                     >
-                        <option value={""}>--residence type--</option>
+                        <option value={""}>-- select --</option>
                         <option value={"MAIN_RESIDENCE"}>main residence</option>
                         <option value={"SUB_RESIDENCE"}>sub residence</option>
                     </select>
@@ -25,7 +25,7 @@ const InputsCitizenResidence = ({residence, handleChange}) => {
                         value={residence.ownerType}
                         onChange={handleChange}
                     >
-                        <option value={""}>--owner type--</option>
+                        <option value={""}>-- select --</option>
                         <option value={"PROPERTY"}>property</option>
                         <option value={"RENTER"}>renter</option>
                         <option value={"LANDLORD"}>landlord</option>
@@ -83,7 +83,7 @@ const InputsCitizenResidence = ({residence, handleChange}) => {
             </div>
             <div className={"row"}>
                 <label>
-                    postalCode
+                    postal code
                     <input type="number"
                            name="postalCode" id="postalCode"
                            required={true}
@@ -118,7 +118,7 @@ const InputsCitizenResidence = ({residence, handleChange}) => {
                         value={residence.country}
                         onChange={handleChange}
                     >
-                        <option value={""}>--select a country--</option>
+                        <option value={""}>-- select --</option>
                         {countryInformationDE.map((country, index) =>
                             <option key={index} value={country.name}>{country.flag} {country.name}</option>
                         )}

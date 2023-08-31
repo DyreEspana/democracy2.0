@@ -10,7 +10,7 @@ const InputsCitizenIncome = ({income, handleChange}) => {
                 value={income.incomeType}
                 onChange={handleChange}
             >
-                <option value={""}>--please select an option--</option>
+                <option value={""}>-- select --</option>
                 <option value={"EMPLOYEE"}>employee</option>
                 <option value={"WORKER"}>worker</option>
                 <option value={"SELF_EMPLOYED"}>self employed</option>
