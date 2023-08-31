@@ -2,6 +2,7 @@ import {useState} from "react";
 import "../../pages/signUp/SignUp.css";
 import InputsCitizenPhone from "./InputsCitizenPhone.jsx";
 
+//ToDo find error on edit => Registration get the new value but InputCitizenPhone dont reRender with new value!!!
 const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
 
     const [phone, setPhone] = useState({
@@ -10,8 +11,6 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
         permissionToContact: "",
         phoneNumber: ""
     });
-
-    console.log(phone);
 
     const [isPhoneOkToAdd, setIsPhoneOkToAdd] = useState(false);
     const [isAddPressed, setIsAddPressed] = useState(false);
@@ -27,35 +26,19 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
     };
 
     const handleChange = event => {
-        const {name, value} = event.target;
-        if (name === "phoneNumber" && !phone.phoneNumber.includes("+")) {
-            setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
-        } else if (name === "phoneNumber" && value.includes("+")) {
+        const {name, value, id} = event.target;
+        if (id === "areaCode") {
+            console.log("area code")
             setPhone(prevState => ({...prevState, [name]: " "}));
             setPhone(prevState => ({...prevState, [name]: value + " "}));
+        } else if (name === "phoneNumber" && !phone.phoneNumber.includes("+")) {
+            console.log("phone with no area code")
+            setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
         } else {
+            console.log("normal else")
             setPhone((prevState) => ({...prevState, [name]: value}));
         }
     };
-
-    /*
-        const handlePhoneNumber = event => {
-            const {name, value} = event.target;
-            if (phone.phoneNumber.includes("+")) {
-                console.log("phone includes +")
-                setPhone(prevState => ({...prevState, [name]: value}));
-            } else {
-                setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
-            }
-        }
-
-        const handleAreaCode = event => {
-            const {name, value} = event.target;
-            setPhone(prevState => ({...prevState, [name]: " "}));
-            setPhone(prevState => ({...prevState, [name]: value + " "}));
-        };
-
-     */
 
     const handleAdd = () => {
         setIsAddPressed(true);
@@ -114,8 +97,6 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
                             <div className={"column"}>
                                 <InputsCitizenPhone
                                     phone={phone}
-                                    // handlePhoneNumber={handlePhoneNumber}
-                                    // handleAreaCode={handleAreaCode}
                                     handleChange={handleChange}
                                     BACKEND_SIGN_UP={BACKEND_SIGN_UP}
                                     existsByPhone={existsByPhone}
@@ -132,8 +113,6 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
                 <div className={"column"}>
                     <InputsCitizenPhone
                         phone={phone}
-                        // handlePhoneNumber={handlePhoneNumber}
-                        // handleAreaCode={handleAreaCode}
                         handleChange={handleChange}
                         BACKEND_SIGN_UP={BACKEND_SIGN_UP}
                         existsByPhone={existsByPhone}
