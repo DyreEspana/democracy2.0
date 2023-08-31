@@ -1,10 +1,10 @@
-import "../../pages/signUp/SignUp.css";
+import {useEffect, useState} from "react";
 import RegistrationCitizenResidence from ".//RegistrationCitizenResidence.jsx";
 import RegistrationCitizenMail from ".//RegistrationCitizenMail.jsx";
 import RegistrationCitizenPhone from ".//RegistrationCitizenPhone.jsx";
 import RegistrationCitizenIncome from ".//RegistrationCitizenIncome.jsx";
 import countryInformationDE from ".//CountryInformationDE.jsx";
-import {useEffect, useState} from "react";
+import "../../pages/signUp/SignUp.css";
 
 
 const InputCitizen = ({
@@ -51,8 +51,8 @@ const InputCitizen = ({
 
     return (
         <div className="signUpMainDiv">
+            <h1>{h1Title}</h1>
             <form method={"POST"} onSubmit={handleSubmit}>
-                <h1>{h1Title}</h1>
                 <div className={"column formSection"}>
                     <label className={"genderLabel"}>
                         gender
@@ -62,7 +62,7 @@ const InputCitizen = ({
                             value={citizen.gender}
                             onInput={handleChange}
                         >
-                            <option value={""}>--select your gender--</option>
+                            <option value={""}>-- select --</option>
                             <option value={"MALE"}>man</option>
                             <option value={"FEMALE"}>woman</option>
                             <option value={"DIVERS"}>divers</option>
@@ -140,7 +140,7 @@ const InputCitizen = ({
                             value={citizen.nationality}
                             onChange={handleChange}
                         >
-                            <option value={""}>--select your nationality--</option>
+                            <option value={""}>-- select --</option>
                             {countryInformationDE.map((country, index) =>
                                 <option key={index} value={country.name}>{country.flag} {country.name}</option>
                             )}
