@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import "./SignUp.css";
+import {Buffer} from "buffer";
 import InputCitizen from "../../components/signUp/InputCitizen.jsx";
+import "./SignUp.css";
 
-
-const SignUp = ({isUserRegistered, setIsUserRegistered}) => {
+const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLoggedIn, setUsername}) => {
 
     const BACKEND_SIGN_UP = "http://localhost:8080/auth/sign-up"
     const navigate = useNavigate();
@@ -27,14 +27,11 @@ const SignUp = ({isUserRegistered, setIsUserRegistered}) => {
     const [phones, setPhones] = useState([]);
     const [incomes, setIncomes] = useState([]);
 
-
     const [isCitizenOkToSubmit, setIsCitizenOkToSubmit] = useState(true);
     const [countdown, setCountdown] = useState(timeToRedirect);
 
-    console.log({...citizen, residences, mails, phones, incomes});
     const handleSubmit = event => {
         event.preventDefault();
-
 
         if (isCitizenOkToSubmit) {
             fetch(BACKEND_SIGN_UP,
@@ -45,30 +42,44 @@ const SignUp = ({isUserRegistered, setIsUserRegistered}) => {
                     },
                     body: JSON.stringify({...citizen, residences, mails, phones, incomes})
                 })
-                .then(response => response.text())
-                .then(text => {
-                    console.log(text);
-                    setIsUserRegistered(true);
+                .then(response => response.json())
+                .then(citizen => {
+                    console.log(citizen)
+                    setUsername(citizen.username)
+                    setIsCitizenRegistered(true);
+                    setIsCitizenLoggedIn(true);
                 })
                 .catch(error => {
                     console.error("Error: ", error);
                 });
-        } else {
-            setIsCitizenOkToSubmit(false);
+
+            const headers = new Headers();
+            const auth = Buffer.from(citizen.username + ":" + citizen.password).toString("base64");
+            headers.set("Authorization", "Basic " + auth);
+            return fetch(BACKEND_SIGN_UP, {method: "GET", headers: headers})
+                .then(response => response.text())
+                .then(jwt => {
+                    if (!jwt) {
+                        console.error("no token");
+                        return;
+                    }
+                    localStorage.setItem("jwt", jwt);
+                })
+                .catch(error => console.log("ERROR: " + error));
         }
     };
 
-    isUserRegistered &&
-    setTimeout(navigate, timeToRedirect * 1000, "/sign-in");
+    isCitizenRegistered &&
+    setTimeout(navigate, timeToRedirect * 1000, "/dashboard");
 
     useEffect(() => {
-        if (isUserRegistered && countdown >= 0) {
+        if (isCitizenRegistered && countdown >= 0) {
             const interval = setInterval(() => {
                 setCountdown(prev => prev - 1);
             }, 1000);
             return () => clearInterval(interval);
         }
-    }, [countdown, isUserRegistered]);
+    }, [countdown, isCitizenRegistered]);
 
     return (
         <InputCitizen
