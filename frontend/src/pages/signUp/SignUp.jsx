@@ -44,10 +44,10 @@ const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLogged
                 })
                 .then(response => response.json())
                 .then(citizen => {
-                    console.log(citizen)
                     setUsername(citizen.username)
                     setIsCitizenRegistered(true);
                     setIsCitizenLoggedIn(true);
+                    getToken();
                 })
                 .catch(error => {
                     console.error("Error: ", error);
@@ -70,10 +70,6 @@ const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLogged
             })
             .catch(error => console.log("ERROR: " + error));
     }
-
-    useEffect(() => {
-        getToken().then(response => console.log("get token, response: " + response));
-    }, [isCitizenRegistered])
 
     isCitizenRegistered &&
     setTimeout(navigate, timeToRedirect * 1000, "/dashboard");
