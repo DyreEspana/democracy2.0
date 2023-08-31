@@ -1,0 +1,181 @@
+:root {
+    --citizenNav-height: 6vh;
+    --citizenNav-width: 90vw;
+}
+
+.citizenNav {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: var(--citizenNav-height);
+    background-color: #121212;
+    justify-content: center;
+    align-items: center;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+a {
+    color: white;
+    font-weight: 500;
+    text-decoration: inherit;
+}
+
+svg {
+    fill: white;
+}
+
+
+.citizenNav ul {
+    display: flex;
+    flex-direction: row;
+    width: var(--citizenNav-width);
+    align-items: center;
+    font-size: 1rem;
+    padding-left: 0;
+    gap: 2rem;
+}
+
+.citizenNav li {
+    justify-content: center;
+    width: fit-content;
+    gap: 0.6rem;
+}
+
+.citizenNav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.citizenNav svg {
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+.home {
+    margin-right: auto;
+}
+
+
+.mainDivCitizenMenu {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: var(--citizenNav-height);
+    right: calc((100vw - var(--citizenNav-width)) / 2);
+    z-index: 10;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #121212;
+}
+
+.mainDivCitizenMenu ul {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 0.4rem 1.6rem 0.4rem 1.4rem;
+    font-size: 1rem;
+    gap: 1.2rem;
+}
+
+.mainDivCitizenMenu button {
+    padding: 0.1em 0.4em;
+}
+
+.mainDivCitizenMenu svg {
+    height: 1.4rem;
+    width: 1.4rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+
+.featureNav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--citizenNav-height);
+    left: 0;
+    height: calc(100vh - var(--citizenNav-height));
+    align-content: center;
+    justify-content: center;
+}
+
+.featureNav ul {
+    flex-direction: column;
+    width: fit-content;
+    margin-bottom: 10vh;
+    padding: 0.8rem 1.4rem 0.8rem 1.4rem;
+    font-size: 1rem;
+    gap: 1.2rem;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #121212;
+}
+
+.featureNav li {
+    flex-direction: row;
+    gap: 0.6vw
+}
+
+#dashboard {
+    margin-top: 0.8rem;
+    margin-bottom: 2.6rem;
+}
+
+#toggleFeatureNav {
+    margin-top: 2.6rem;
+    margin-bottom: 0.8rem;
+    margin-right: 0.2rem;
+    justify-content: center;
+}
+
+.linkIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 0.6vw
+}
+
+.featureNav svg {
+    height: 1.4rem;
+    width: 1.4rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+li:hover {
+    color: rgb(0, 130, 130);
+}
+
+li:hover a {
+    color: rgb(0, 130, 130);
+}
+
+li:hover svg {
+    fill: rgb(0, 130, 130);
+}
+
+.open {
+    scale: -1 1;
+}

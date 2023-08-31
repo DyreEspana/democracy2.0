@@ -1,0 +1,131 @@
+.signUpMainDiv {
+    overflow-block: auto;
+    position: fixed;
+    top: var(--citizenNav-height);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: calc(100vh - var(--citizenNav-height));
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+.signUpMainDiv h1 {
+    padding: calc(var(--citizenNav-height) * 7) 0 0;
+    margin: 0;
+}
+
+.signUpMainDiv h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.signUpMainDiv h3 {
+    text-align: right;
+    font-size: 1em;
+    margin-right: auto;
+}
+
+.signUpMainDiv form {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10vw;
+    gap: 2vh;
+}
+
+.formSection {
+    border: solid white;
+    border-radius: 20px;
+    padding: 2vh 4vw 2vh 4vw;
+}
+
+.formSectionDetail {
+    border: solid white 2px;
+    border-radius: 20px;
+    padding: 1vh 2vw 1vh 2vw;
+}
+
+.formDetailListOpen {
+    border-bottom: solid white 1px;
+}
+
+.formDetailList {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vw;
+}
+
+.signUpMainDiv form .column {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+
+.signUpMainDiv form .row {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+}
+
+.signUpMainDiv label {
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1vh;
+}
+
+.signUpMainDiv select {
+    border-radius: 4px;
+    height: 2rem;
+    width: fit-content;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.signUpMainDiv input {
+    border-radius: 4px;
+    height: 1.8rem;
+    width: fit-content;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+#houseNumber, #stair, #stock, #door {
+    width: 10vw;
+}
+
+#postalCode {
+    width: 12vw;
+}
+
+.saveUpdateCitizenDetails {
+    margin: 1vh 0;
+}
+
+.submitDivButtons {
+    padding-block-end: var(--citizenNav-height);
+}
+
+.inputTaken{
+    color: palevioletred;
+}
