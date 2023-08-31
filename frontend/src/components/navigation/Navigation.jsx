@@ -50,12 +50,12 @@ const Navigation = ({isCitizenRegistered, isCitizenLoggedIn, setIsCitizenLoggedI
                 </ul>
             </nav>
 
-            {isCitizenMenuOpen?
+            {isCitizenMenuOpen ?
                 <CitizenMenuModal
                     isCitizenMenuOpen={isCitizenMenuOpen}
                     setIsCitizenMenuOpen={setIsCitizenMenuOpen}
                     setIsCitizenLoggedIn={setIsCitizenLoggedIn}/>
-            :""}
+                : ""}
 
             {isCitizenLoggedIn ?
                 <nav className={"featureNav"}>
