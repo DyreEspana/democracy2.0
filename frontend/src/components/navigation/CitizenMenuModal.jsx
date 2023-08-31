@@ -1,6 +1,5 @@
-import {useState, useEffect} from "react";
-import "../navigation/Navigation.css"
 import {Link} from "react-router-dom";
+import "../navigation/Navigation.css"
 
 const CitizenMenuModal = ({isCitizenMenuOpen, setIsCitizenMenuOpen, setIsCitizenLoggedIn}) => {
 
