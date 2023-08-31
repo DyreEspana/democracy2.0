@@ -38,14 +38,17 @@ function App() {
                 {
                     path: "/sign-up",
                     element: <SignUp
-                        isUserRegistered={isCitizenRegistered}
-                        setIsUserRegistered={setIsCitizenRegistered}/>
+                        isCitizenRegistered={isCitizenRegistered}
+                        setIsCitizenRegistered={setIsCitizenRegistered}
+                        setIsCitizenLoggedIn={setIsCitizenLoggedIn}
+                        setUsername={setUsername}/>
                 },
                 {
                     path: "/sign-in",
                     element: <SignIn
                         isCitizenLoggedIn={isCitizenLoggedIn}
                         setIsCitizenLoggedIn={setIsCitizenLoggedIn}
+                        setIsCitizenRegistered={setIsCitizenRegistered}
                         setUsername={setUsername}
                         setAuthorities={setAuthorities}/>
                 },
