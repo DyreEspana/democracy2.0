@@ -42,14 +42,7 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> {
-                    cors.configurationSource(corsConfigurationSource());
-                    /*
-                    cors.configurationSource(corsConfigurationSignIn());
-                    cors.configurationSource(corsConfigurationSignUp());
-                    cors.configurationSource(corsConfigurationEdit());
-                     */
-                })
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/username").permitAll();
@@ -75,39 +68,6 @@ public class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    /*
-    @Bean
-    CorsConfigurationSource corsConfigurationSignUp() {
-        CorsConfiguration signUp = new CorsConfiguration();
-        signUp.setAllowedOrigins(List.of("http://localhost:5173/sign-up"));
-        signUp.setAllowedMethods(List.of("GET", "POST"));
-        signUp.setAllowedHeaders(List.of("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", signUp);
-        return source;
-    }
-    @Bean
-    CorsConfigurationSource corsConfigurationSignIn() {
-        CorsConfiguration signIn = new CorsConfiguration();
-        signIn.setAllowedOrigins(List.of("http://localhost:5173"));
-        signIn.setAllowedMethods(List.of("GET"));
-        signIn.setAllowedHeaders(List.of("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/sign-in", signIn);
-        return source;
-    }
-    @Bean
-    CorsConfigurationSource corsConfigurationEdit() {
-        CorsConfiguration edit = new CorsConfiguration();
-        edit.setAllowedOrigins(List.of("http://localhost:5173/citizen/edit"));
-        edit.setAllowedMethods(List.of("PUT"));
-        edit.setAllowedHeaders(List.of("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", edit);
-        return source;
-    }
-     */
 
     @Bean
     UserDetailsService userDetailsService(CitizenRepository citizenRepository) {
