@@ -82,7 +82,7 @@ public class CitizenGenerator {
                     .editDate(LocalDateTime.now())
                     .gender("MALE")
                     .username("dyreespana")
-                    .password(passwordEncoder.encode("123"))
+                    .password("123")
                     .firstName("Dyre")
                     .middleName("Jean Pierre")
                     .lastName("España")
@@ -96,72 +96,6 @@ public class CitizenGenerator {
                     .incomes(List.of(dyreIncome1, dyreIncome2, dyreIncome3))
                     .build();
             newCitizenSave.save(dyre);
-
-/*
-            Citizen acacia = new Citizen(
-                    2L,
-                    LocalDateTime.now(),
-                    1753280785,
-                    true,
-                    "acacia",
-                    "Acacia",
-                    "",
-                    "España",
-                    passwordEncoder.encode("password"),
-                    "MALE",
-                    LocalDate.of(2003, 7, 1),
-                    "Österreich",
-                    Set.of("CITIZEN"),
-                    new HashSet<>(),
-                    new HashSet<>(),
-                    new HashSet<>(),
-                    new ArrayList<>()
-            );
-            Residence residence3 = new Residence(
-                    3L,
-                    acacia,
-                    "MAIN_RESIDENCE",
-                    "RENTER",
-                    "Herrengasse",
-                    "6a",
-                    1,
-                    3,
-                    30,
-                    "",
-                    3002,
-                    "Purkersdorf",
-                    "Österreich"
-            );
-            Mail acaciaMail = new Mail(
-                    3L,
-                    acacia,
-                    true,
-                    true,
-                    false,
-                    "acacia@gmail.com"
-            );
-            Phone acaciaPhone = new Phone(
-                    2L,
-                    acacia,
-                    "MOBILE",
-                    true,
-                    true,
-                    true,
-                    "+436645079273"
-            );
-            Income acaciaIncome = new Income(
-                    4L,
-                    acacia,
-                    "UNEMPLOYMENT_BENEFIT",
-                    800,
-                    7600
-            );
-            acacia.addResidence(residence3);
-            acacia.addMail(acaciaMail);
-            acacia.addPhone(acaciaPhone);
-            acacia.addIncome(acaciaIncome);
-            newCitizenSave.save(acacia);
-             */
         };
     }
 }

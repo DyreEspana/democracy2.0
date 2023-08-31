@@ -35,24 +35,19 @@ public class Citizen {
     private LocalDate birthday;
     private long socialSecurityNumber;
     private String nationality;
-    //@Singular
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> authorities;
-    //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Residence.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Residence.class, fetch = FetchType.EAGER)
     private Set<Residence> residences;
-    //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Mail.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Mail.class, fetch = FetchType.EAGER)
     private Set<Mail> mails;
-    //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Phone.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Phone.class, fetch = FetchType.EAGER)
     private Set<Phone> phones;
-    //@Singular
     @JsonManagedReference
-    @OneToMany(targetEntity = Income.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Income.class, fetch = FetchType.EAGER)
     private List<Income> incomes;
 
 

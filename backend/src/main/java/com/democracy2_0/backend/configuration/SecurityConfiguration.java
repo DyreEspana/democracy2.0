@@ -44,12 +44,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/username").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/mail").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/phone").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/auth/sign-in").authenticated();
-                    auth.requestMatchers(HttpMethod.GET, "/auth/sign-in/authorized").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/auth/sign-up").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/auth/sign-in/**").authenticated();
                     auth.requestMatchers(HttpMethod.PUT, "/citizen/edit").hasAnyAuthority("CITIZEN");
                 })
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
