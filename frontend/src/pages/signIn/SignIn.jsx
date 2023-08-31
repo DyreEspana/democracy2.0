@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Buffer} from "buffer";
 import "./SignIn.css";
 
-const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setUsername, setAuthorities}) => {
+const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername, setAuthorities}) => {
 
     const BACKEND_SIGN_IN = "http://localhost:8080/auth/sign-in"
     const navigate = useNavigate();
@@ -23,7 +23,6 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setUsername, setAuthor
 
         if (formJson.username !== "" && formJson.password !== "") {
             const headers = new Headers();
-            //ToDo vlt ist hier ein fehler!
             const auth = Buffer.from(formJson.username + ":" + formJson.password).toString("base64");
             headers.set("Authorization", "Basic " + auth);
             return fetch(BACKEND_SIGN_IN, {method: "GET", headers: headers})
@@ -35,6 +34,7 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setUsername, setAuthor
                     }
                     localStorage.setItem("jwt", jwt);
                     setToken(jwt);
+                    handleSignIn().then(r => console.log("Successful login"));
                 })
                 .catch(error => console.log("ERROR: " + error));
         }
@@ -50,15 +50,10 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setUsername, setAuthor
                 setResMessage("Successful login");
                 setUsername(text);
                 setIsCitizenLoggedIn(true);
+                setIsCitizenRegistered(true);
             })
             .catch(error => console.log("ERROR: " + error));
-    }
-
-    useEffect(() => {
-        if (token !== "") {
-            handleSignIn();
-        }
-    }, [token]);
+    };
 
     useEffect(() => {
         if (isCitizenLoggedIn && countdown >= 0) {
@@ -94,19 +89,12 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setUsername, setAuthor
                     </label>
                     <button type="submit">Submit</button>
                 </form>
-                {
-                    resMessage === "" ?
-                        "" :
-                        /*
-                        resMessage.message === "Wrong username." ?
-                            <p className="errorMessage">{resMessage.message}</p> :
-                         */
-                        resMessage === "Wrong username or password" ?
-                            <p className="errorMessage">{resMessage}</p> :
-                            resMessage === "Successful login" &&
-                            <p className="successMessage">Successful Login.<br/>
-                                You will be automatically redirected in {countdown} seconds.</p>
-                }
+                {resMessage === "" ? "" :
+                    resMessage === "Wrong username or password" ?
+                        <p className="errorMessage">{resMessage}</p> :
+                        resMessage === "Successful login" &&
+                        <p className="successMessage">Successful Login.<br/>
+                            You will be automatically redirected in {countdown} seconds.</p>}
             </div>
         </div>
     );
