@@ -46,11 +46,9 @@ function App() {
                 {
                     path: "/sign-in",
                     element: <SignIn
-                        isCitizenLoggedIn={isCitizenLoggedIn}
                         setIsCitizenLoggedIn={setIsCitizenLoggedIn}
                         setIsCitizenRegistered={setIsCitizenRegistered}
-                        setUsername={setUsername}
-                        setAuthorities={setAuthorities}/>
+                        setUsername={setUsername}/>
                 },
                 {
                     path: "/sign-out",
