@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Buffer} from "buffer";
 import "./SignIn.css";
@@ -7,7 +7,6 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered
 
     const BACKEND_SIGN_IN = "http://localhost:8080/auth/sign-in"
     const navigate = useNavigate();
-    const timeToRedirect = 3;
 
     const [token, setToken] = useState("");
     const [countdown, setCountdown] = useState(timeToRedirect);
@@ -51,21 +50,10 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered
                 setUsername(text);
                 setIsCitizenLoggedIn(true);
                 setIsCitizenRegistered(true);
+                navigate("/dashboard")
             })
             .catch(error => console.log("ERROR: " + error));
     };
-
-    useEffect(() => {
-        if (isCitizenLoggedIn && countdown >= 0) {
-            const interval = setInterval(() => {
-                setCountdown(prev => prev - 1)
-            }, 1000);
-            return () => clearTimeout(interval);
-        }
-    }, [countdown, isCitizenLoggedIn]);
-
-    isCitizenLoggedIn &&
-    setTimeout(navigate, timeToRedirect * 1000, "/dashboard")
 
     return (
         <div className={"mainSignIn"}>
