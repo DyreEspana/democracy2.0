@@ -1,15 +1,13 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Buffer} from "buffer";
 import "./SignIn.css";
 
-const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername, setAuthorities}) => {
+const SignIn = ({setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername}) => {
 
     const BACKEND_SIGN_IN = "http://localhost:8080/auth/sign-in"
     const navigate = useNavigate();
 
-    const [token, setToken] = useState("");
-    const [countdown, setCountdown] = useState(timeToRedirect);
     const [resMessage, setResMessage] = useState("");
 
     const proofSignIn = event => {
@@ -32,8 +30,7 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered
                         return;
                     }
                     localStorage.setItem("jwt", jwt);
-                    setToken(jwt);
-                    handleSignIn().then(r => console.log("Successful login"));
+                    handleSignIn().then(r => console.log("Successful login " + r));
                 })
                 .catch(error => console.log("ERROR: " + error));
         }
@@ -81,8 +78,7 @@ const SignIn = ({isCitizenLoggedIn, setIsCitizenLoggedIn, setIsCitizenRegistered
                     resMessage === "Wrong username or password" ?
                         <p className="errorMessage">{resMessage}</p> :
                         resMessage === "Successful login" &&
-                        <p className="successMessage">Successful Login.<br/>
-                            You will be automatically redirected in {countdown} seconds.</p>}
+                        <p className="successMessage">Successful Login.</p>}
             </div>
         </div>
     );
