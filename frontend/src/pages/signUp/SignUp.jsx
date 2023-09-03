@@ -1,31 +1,23 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Buffer} from "buffer";
-import InputCitizen from "../../components/signUp/InputCitizen.jsx";
+import InputCitizen from "../../components/formCitizen/InputCitizen.jsx";
 import "./SignUp.css";
 
-const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLoggedIn, setUsername}) => {
+const SignUp = ({
+                    BACKEND_PORT,
+                    citizen, setCitizen,
+                    residences, setResidences,
+                    mails, setMails,
+                    phones, setPhones,
+                    incomes, setIncomes,
+                    isCitizenRegistered, setIsCitizenRegistered,
+                    isCitizenLoggedIn, setIsCitizenLoggedIn,
+                }) => {
 
-    const BACKEND_SIGN_UP = "http://localhost:8080/auth/sign-up"
+    const BACKEND_SIGN_UP = BACKEND_PORT + "/auth/sign-up";
     const navigate = useNavigate();
     const timeToRedirect = 6;
-
-    const [citizen, setCitizen] = useState({
-        socialSecurityNumber: '',
-        valid: false,
-        username: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        password: '',
-        gender: '',
-        birthday: '',
-        nationality: ''
-    });
-    const [residences, setResidences] = useState([]);
-    const [mails, setMails] = useState([]);
-    const [phones, setPhones] = useState([]);
-    const [incomes, setIncomes] = useState([]);
 
     const [isCitizenOkToSubmit, setIsCitizenOkToSubmit] = useState(true);
     const [countdown, setCountdown] = useState(timeToRedirect);
@@ -38,16 +30,21 @@ const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLogged
                 {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({...citizen, residences, mails, phones, incomes})
                 })
                 .then(response => response.json())
-                .then(citizen => {
-                    setUsername(citizen.username)
+                .then(resCitizen => {
+                    localStorage.clear();
+                    localStorage.setItem("loggedInUsername", resCitizen.username);
+                    let resMails = resCitizen.mails.map(mail => mail.mail);
+                    localStorage.setItem("loggedInMails", resMails.join());
+                    let resPhones = resCitizen.phones.map(phone => phone.phoneNumber);
+                    localStorage.setItem("loggedInPhones", resPhones.join());
                     setIsCitizenRegistered(true);
                     setIsCitizenLoggedIn(true);
-                    getToken();
+                    getToken().then(r => console.log("got token " + r));
                 })
                 .catch(error => {
                     console.error("Error: ", error);
@@ -85,13 +82,15 @@ const SignUp = ({isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLogged
 
     return (
         <InputCitizen
+            BACKEND_PORT={BACKEND_PORT}
             citizen={citizen} setCitizen={setCitizen}
             residences={residences} setResidences={setResidences}
             mails={mails} setMails={setMails}
             phones={phones} setPhones={setPhones}
             incomes={incomes} setIncomes={setIncomes}
             handleSubmit={handleSubmit} h1Title={"Register"}
-            BACKEND_SIGN_UP={BACKEND_SIGN_UP}/>
+            isCitizenLoggedIn={isCitizenLoggedIn}
+        />
     );
 };
 

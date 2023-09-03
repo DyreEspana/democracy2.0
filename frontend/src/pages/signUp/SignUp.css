@@ -4,7 +4,7 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
-    margin-top: calc(var(--citizenNav-height)*1.4);
+    margin-top: calc(var(--citizenNav-height) * 1.4);
     gap: 2vh;
 }
 
@@ -89,22 +89,30 @@
     justify-content: center;
     align-items: center;
     gap: 0.1vh;
+    font-size: 1vw;
 }
 
 .signUpMainDiv select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 4px;
-    height: 2rem;
     width: fit-content;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.4vw;
 }
 
 .signUpMainDiv input {
     border-radius: 4px;
-    height: 1.8rem;
     width: auto;
+    padding: 0.4vh 1vw;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.4vw;
+}
+
+.name {
+    width: auto;
 }
 
 #houseNumber, #stair, #stock, #door {
@@ -120,10 +128,19 @@
 }
 
 .submitDivButtons {
-    padding-block-end: var(--citizenNav-height);
+    margin-bottom: var(--citizenNav-height);
 }
 
-.inputTaken {
+.submitDivButtons button {
+    width: 40%;
+}
+
+.correctInput{
+    color: aquamarine;
+    font-weight: bold;
+}
+
+.incorrectInput {
     color: palevioletred;
     font-weight: bold;
 }
