@@ -3,9 +3,9 @@ import {useNavigate} from "react-router-dom";
 import {Buffer} from "buffer";
 import "./SignIn.css";
 
-const SignIn = ({setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername}) => {
+const SignIn = ({BACKEND_PORT, setIsCitizenLoggedIn, setIsCitizenRegistered}) => {
 
-    const BACKEND_SIGN_IN = "http://localhost:8080/auth/sign-in"
+    const BACKEND_SIGN_IN = BACKEND_PORT + "/auth/sign-in"
     const navigate = useNavigate();
 
     const [resMessage, setResMessage] = useState("");
@@ -25,6 +25,7 @@ const SignIn = ({setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername}) => 
             return fetch(BACKEND_SIGN_IN, {method: "GET", headers: headers})
                 .then(response => response.text())
                 .then(jwt => {
+                    localStorage.clear();
                     if (!jwt) {
                         setResMessage("Wrong username or password");
                         return;
@@ -41,10 +42,14 @@ const SignIn = ({setIsCitizenLoggedIn, setIsCitizenRegistered, setUsername}) => 
         const headers = new Headers();
         headers.set("Authorization", `Bearer ${jwt}`);
         return fetch(BACKEND_SIGN_IN + "/authorized", {method: "GET", headers: headers})
-            .then(response => response.text())
-            .then(text => {
+            .then(response => response.json())
+            .then(citizen => {
                 setResMessage("Successful login");
-                setUsername(text);
+                localStorage.setItem("loggedInUsername", citizen.username);
+                let resMails = citizen.mails.map(mail => mail.mail);
+                localStorage.setItem("loggedInMails", resMails.join());
+                let resPhones = citizen.phones.map(phone => phone.phoneNumber);
+                localStorage.setItem("loggedInPhones", resPhones.join());
                 setIsCitizenLoggedIn(true);
                 setIsCitizenRegistered(true);
                 navigate("/dashboard")
