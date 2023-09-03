@@ -1,5 +1,5 @@
 const countryInformationDE =
-      [
+    [
         {
             name: "Afghanistan",
             flag: "🇦🇫",
@@ -692,4 +692,4 @@ const countryInformationDE =
         }
     ];
 
-    export default countryInformationDE;
+export default countryInformationDE;
