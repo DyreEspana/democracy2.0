@@ -1,20 +1,20 @@
 package com.democracy2_0.backend.controller.citizen;
 
 import com.democracy2_0.backend.data.citizen.Citizen;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("citizen")
+@RequiredArgsConstructor
 public class CitizenController {
 
     private final CitizenRepository citizenRepository;
-
-    public CitizenController(CitizenRepository citizenRepository) {
-        this.citizenRepository = citizenRepository;
-    }
 
     @GetMapping
     public List<Citizen> findAll() {
@@ -72,19 +72,30 @@ public class CitizenController {
         return citizenRepository.findByNationality(nationality);
     }
 
-    @PutMapping("{id}")
-    public Citizen put(@PathVariable Long id, @RequestBody Citizen putCitizen) throws CitizenNotFoundException {
-        return citizenRepository.findById(id)
+    @GetMapping("/edit")
+    public Citizen getCitizen(Authentication authentication) {
+        String username = authentication.getName();
+        return citizenRepository.findByUsername(username).orElse(null);
+    }
+
+    @PutMapping("/edit")
+    public Citizen put(Authentication authentication, @RequestBody Citizen putCitizen) throws CitizenNotFoundException {
+        return citizenRepository.findByUsername(authentication.getName())
                 .map(citizen -> {
-                    citizen.setSocialSecurityNumber(putCitizen.getSocialSecurityNumber());
+                    citizen.setEditDate(LocalDateTime.now());
+                    citizen.setGender(putCitizen.getGender());
                     citizen.setUsername(putCitizen.getUsername());
                     citizen.setFirstName(putCitizen.getFirstName());
                     citizen.setMiddleName(putCitizen.getMiddleName());
                     citizen.setLastName(putCitizen.getLastName());
                     citizen.setPassword(putCitizen.getPassword());
-                    citizen.setGender(putCitizen.getGender());
                     citizen.setBirthday(putCitizen.getBirthday());
+                    citizen.setSocialSecurityNumber(putCitizen.getSocialSecurityNumber());
                     citizen.setNationality(putCitizen.getNationality());
+                    citizen.setResidences(putCitizen.getResidences());
+                    citizen.setMails(putCitizen.getMails());
+                    citizen.setPhones(putCitizen.getPhones());
+                    citizen.setIncomes(putCitizen.getIncomes());
                     return citizenRepository.save(citizen);
                 })
                 .orElseThrow(CitizenNotFoundException::new);
