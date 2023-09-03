@@ -2,7 +2,7 @@ import {useState} from "react";
 import "../../pages/signUp/SignUp.css";
 import InputsCitizenIncome from "./InputsCitizenIncome.jsx";
 
-const RegistrationCitizenIncome = ({incomes, setIncomes}) => {
+const FormCitizenIncome = ({incomes, setIncomes}) => {
 
     const [income, setIncome] = useState({
         incomeType: "",
@@ -110,4 +110,4 @@ const RegistrationCitizenIncome = ({incomes, setIncomes}) => {
     </div>);
 };
 
-export default RegistrationCitizenIncome;
+export default FormCitizenIncome;

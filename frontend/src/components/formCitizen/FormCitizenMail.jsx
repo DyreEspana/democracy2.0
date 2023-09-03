@@ -1,84 +1,77 @@
 import {useState} from "react";
 import "../../pages/signUp/SignUp.css";
-import InputsCitizenResidence from "./InputsCitizenResidence.jsx";
+import InputsCitizenMail from "./InputsCitizenMail.jsx";
 
-const RegistrationCitizenResidence = ({residences, setResidences}) => {
+const FormCitizenMail = ({BACKEND_PORT, mails, setMails}) => {
 
-    let [residence, setResidence] = useState({
-        residenceType: "",
-        ownerType: "",
-        street: "",
-        houseNumber: "",
-        stair: "",
-        stock: "",
-        door: "",
-        option: "",
-        postalCode: "",
-        city: "",
-        country: ""
-    })
+    const [eMail, setEMail] = useState({
+        isMain: "",
+        permissionToContact: "",
+        mail: ""
+    });
 
-    const [isResidenceOkToAdd, setIsResidenceOkToAdd] = useState(false);
+    const [isMailOkToAdd, setIsMailOkToAdd] = useState(false);
     const [isAddPressed, setIsAddPressed] = useState(false);
     const [isEditPressed, setIsEditPressed] = useState([]);
     const [isOneEditPressed, setIsOneEditPressed] = useState(false);
 
+    const [existsByMail, setExistsByMail] = useState(false);
+
     const handleSubmit = event => {
         event.preventDefault();
         setIsAddPressed(false);
-        setResidences([...residences, residence]);
+        setMails([...mails, eMail]);
     };
 
     const handleChange = event => {
         const {name, value} = event.target;
-        setResidence((prevState) => ({...prevState, [name]: value}));
+        setEMail((prevState) => ({...prevState, [name]: value}));
     };
 
     const handleAdd = () => {
         setIsAddPressed(true);
-        const resetResidence = {...residence};
-        Object.keys(resetResidence).forEach(function (key) {
-            resetResidence[key] = ""
+        const resetEMail = {...eMail}
+        Object.keys(resetEMail).forEach(function (key) {
+            resetEMail[key] = ""
         });
-        setResidence(resetResidence);
+        setEMail(resetEMail);
     };
 
     const handleEdit = (event, index) => {
         event.preventDefault();
         isEditPressed[index] = true;
         setIsOneEditPressed(true);
-        const getResidence = {...residences[index]};
-        setResidence(getResidence);
+        const getMail = {...mails[index]};
+        setEMail(getMail);
     };
 
     const saveEdit = (event, index) => {
         event.preventDefault();
         isEditPressed[index] = false;
         setIsOneEditPressed(false);
-        const saveChanges = residences.map((r, i) => {
+        const saveChanges = mails.map((m, i) => {
             if (i === index) {
-                return residences[i] = residence;
+                return mails[i] = eMail;
             } else {
-                return r;
+                return m;
             }
         });
-        setResidences(saveChanges);
+        setMails(saveChanges);
     };
 
     const handleDelete = (event, index) => {
         event.preventDefault();
-        setResidences(residences.filter(r => residences.indexOf(r) !== index));
+        setMails(mails.filter(m => mails.indexOf(m) !== index));
     };
 
     return (<div className={"column formSection"}>
-        <h2>residence</h2>
-        <div className={"column"}>
-            {residences.length > 0 ?
-                residences.map((address, index) =>
+        <h2>e-mail</h2>
+        <div className="column">
+            {mails.length > 0 ?
+                mails.map((e_mail, index) =>
                     <div key={index} className={"column formSectionDetail"}>
                         <div className={isEditPressed[index] ? "formDetailList formDetailListOpen" : "formDetailList"}>
-                            <h3>{address.street + " " + address.houseNumber + "/" + address.stair + "/" + address.stock + "/" + address.door}
-                                <br/>{address.postalCode + " " + address.city}</h3>
+                            <h3>{e_mail.mail}</h3>
                             <button className={"deleteCitizenDetails"}
                                     type={"button"}
                                     onClick={event => handleDelete(event, index)}>delete
@@ -90,24 +83,34 @@ const RegistrationCitizenResidence = ({residences, setResidences}) => {
                         </div>
                         {isEditPressed[index] ?
                             <div className={"column"}>
-                                <InputsCitizenResidence
-                                    residence={residence}
+                                <InputsCitizenMail
+                                    BACKEND_PORT={BACKEND_PORT}
+                                    eMail={eMail}
                                     handleChange={handleChange}
+                                    existsByMail={existsByMail}
+                                    setExistsByMail={setExistsByMail}
                                 />
-                                <button className={"saveUpdateCitizenDetails"}
-                                        onClick={event => saveEdit(event, index)}>save
-                                </button>
+                                {!existsByMail ?
+                                    <button className={"saveUpdateCitizenDetails"}
+                                            onClick={event => saveEdit(event, index)}>save
+                                    </button>
+                                    : ""}
                             </div> : ""}
                     </div>) : ""}
             {isAddPressed ?
                 <div className={"column"}>
-                    <InputsCitizenResidence
-                        residence={residence}
+                    <InputsCitizenMail
+                        BACKEND_PORT={BACKEND_PORT}
+                        eMail={eMail}
                         handleChange={handleChange}
+                        existsByMail={existsByMail}
+                        setExistsByMail={setExistsByMail}
                     />
-                    <button className={"saveUpdateCitizenDetails"}
-                            onClick={handleSubmit}>save
-                    </button>
+                    {!existsByMail ?
+                        <button className={"saveUpdateCitizenDetails"}
+                                onClick={handleSubmit}>save
+                        </button>
+                        : ""}
                 </div>
                 : !isOneEditPressed ?
                     <button className={"addNewCitizenDetail"}
@@ -118,4 +121,4 @@ const RegistrationCitizenResidence = ({residences, setResidences}) => {
     </div>);
 };
 
-export default RegistrationCitizenResidence;
+export default FormCitizenMail;

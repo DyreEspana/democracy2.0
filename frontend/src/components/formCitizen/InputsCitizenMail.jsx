@@ -1,11 +1,15 @@
 import {useEffect} from "react";
 import "../../pages/signUp/SignUp.css";
 
-const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, setExistsByMail}) => {
+const InputsCitizenMail = ({BACKEND_PORT, eMail, handleChange, existsByMail, setExistsByMail}) => {
 
     const fetchMail = (mail) => {
-        if (mail.length !== 0) {
-            fetch(BACKEND_SIGN_UP + "/mail",
+        let loggedInMails = "";
+        if (localStorage.getItem("loggedInMails") !== null) {
+            loggedInMails = localStorage.getItem("loggedInMails");
+        }
+        if (mail.length !== 0 && !loggedInMails.includes(mail)) {
+            fetch(BACKEND_PORT + "/check/mail",
                 {
                     method: "POST",
                     headers: {
@@ -14,9 +18,7 @@ const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, 
                     body: mail
                 })
                 .then(response => response.text())
-                .then(text => {
-                    setExistsByMail(text === "true")
-                })
+                .then(text => setExistsByMail(text === "true"))
                 .catch(error => console.log("Error: ", error))
         }
     }
@@ -56,7 +58,7 @@ const InputsCitizenMail = ({eMail, handleChange, BACKEND_SIGN_UP, existsByMail, 
             </div>
             <label>
                 {!existsByMail ? "e-mail" :
-                    <span className={"inputTaken"}>e-mail is taken!</span>}
+                    <span className={"incorrectInput"}>e-mail is taken!</span>}
                 <input type="email"
                        name="mail" id="mail"
                        pattern='/\S+@\S+\.\S+/'
