@@ -20,8 +20,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class NewCitizenSave {
 
-    private final CitizenRepository citizenRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CitizenRepository citizenRepository;
     private final ResidenceRepository residenceRepository;
     private final MailRepository mailRepository;
     private final PhoneRepository phoneRepository;
@@ -39,7 +39,6 @@ public class NewCitizenSave {
         citizen.setPhones(null);
         citizen.setIncomes(null);
 
-        //ToDo das password wird ja plain text von frontend ins backend gesendet. Ist das keine sicherheitslücke?
         String pw = citizen.getPassword();
         citizen.setPassword(passwordEncoder.encode(pw));
 
@@ -49,22 +48,24 @@ public class NewCitizenSave {
             residence.setCitizen(citizen);
             residenceRepository.save(residence);
         });
+        citizen.setResidences(residences);
+
         mails.forEach(mail -> {
             mail.setCitizen(citizen);
             mailRepository.save(mail);
         });
+        citizen.setMails(mails);
+
         phones.forEach(phone -> {
             phone.setCitizen(citizen);
             phoneRepository.save(phone);
         });
+        citizen.setPhones(phones);
+
         incomes.forEach(income -> {
             income.setCitizen(citizen);
             incomeRepository.save(income);
         });
-
-        citizen.setResidences(residences);
-        citizen.setMails(mails);
-        citizen.setPhones(phones);
         citizen.setIncomes(incomes);
 
         return citizenRepository.save(citizen);
