@@ -14,6 +14,7 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    scroll-snap-align: center;
 }
 
 .mainDivHome header div {
@@ -24,6 +25,16 @@
 .mainDivHome h1 {
     font-size: 8.5vw;
     margin: 0 0 1vh;
+}
+
+.mainDivHome section h2 {
+    font-size: 6vw;
+    margin: 0;
+}
+
+.mainDivHome section h3 {
+    font-size: 4.4vw;
+    margin: 0;
 }
 
 .mainDivHome header div p {
@@ -45,10 +56,10 @@
 .mainDivHome section {
     height: 100vh;
     width: 100vw;
-    text-align: center;
     justify-content: center;
     align-items: center;
     gap: 5vw;
+    scroll-snap-align: center;
 }
 
 .mainDivHome section div {
@@ -58,26 +69,9 @@
     gap: 1vh;
 }
 
-.mainDivHome section h2 {
-    font-size: 6vw;
-}
-
-.mainDivHome section h3 {
-    font-size: 4.4vw;
-    margin: 0;
-}
-
 .mainDivHome section p {
     font-size: 2.2vw;
     margin: 0;
-}
-
-.mainDivHome header {
-    scroll-snap-align: center;
-}
-
-.mainDivHome section {
-    scroll-snap-align: center;
 }
 
 .mainDivHome svg {
