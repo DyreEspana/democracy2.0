@@ -8,19 +8,48 @@ import SignIn from "./pages/signIn/SignIn.jsx";
 
 import Dashboard from "./pages/citizen/Dashboard.jsx";
 import CitizenProfile from "./pages/citizen/CitizenProfile.jsx";
-import Topic from "./pages/citizen/topic/Topic.jsx";
-import Survey from "./pages/citizen/survey/Survey.jsx";
-import Law from "./pages/citizen/law/Law.jsx";
-import Vote from "./pages/citizen/vote/Vote.jsx";
-import Statistic from "./pages/citizen/statistic/Statistic.jsx";
+import Topic from "./pages/topic/Topic.jsx";
+import Survey from "./pages/topic/survey/Survey.jsx";
+import Law from "./pages/topic/law/Law.jsx";
+import Vote from "./pages/topic/vote/Vote.jsx";
+import Statistic from "./pages/topic/statistic/Statistic.jsx";
 
 import './App.css'
 
 function App() {
-    const [username, setUsername] = useState("");
+
+    const BACKEND_PORT = "http://localhost:8080";
+
+    const [citizen, setCitizen] = useState({
+        gender: "",
+        username: "",
+        password: "",
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        birthday: "",
+        socialSecurityNumber: '',
+        nationality: ""
+    });
+    const [residences, setResidences] = useState([]);
+    const [mails, setMails] = useState([]);
+    const [phones, setPhones] = useState([]);
+    const [incomes, setIncomes] = useState([]);
+
     const [isCitizenRegistered, setIsCitizenRegistered] = useState(false);
     const [isCitizenLoggedIn, setIsCitizenLoggedIn] = useState(false);
-    const [authorities, setAuthorities] = useState([]);
+
+    const [isProfilePressed, setIsProfilePressed] = useState(false);
+
+    const [topic, setTopic] = useState({
+        country: "",
+        title: "",
+        theme: "",
+        requirements: "",
+        restrictions: "",
+        existingLaw: ""
+    });
+    const [topicSuccessfullySubmitted, setTopicSuccessfullySubmitted] = useState(false);
 
     const router = createBrowserRouter([
         {
@@ -29,7 +58,13 @@ function App() {
                 isCitizenRegistered={isCitizenRegistered}
                 isCitizenLoggedIn={isCitizenLoggedIn}
                 setIsCitizenLoggedIn={setIsCitizenLoggedIn}
-                username={username}/>,
+                setCitizen={setCitizen}
+                setResidences={setResidences}
+                setMails={setMails}
+                setPhones={setPhones}
+                setIncomes={setIncomes}
+                setIsProfilePressed={setIsProfilePressed}
+            />,
             children: [
                 {
                     path: "/",
@@ -38,17 +73,25 @@ function App() {
                 {
                     path: "/sign-up",
                     element: <SignUp
+                        BACKEND_PORT={BACKEND_PORT}
+                        citizen={citizen} setCitizen={setCitizen}
+                        residences={residences} setResidences={setResidences}
+                        mails={mails} setMails={setMails}
+                        phones={phones} setPhones={setPhones}
+                        incomes={incomes} setIncomes={setIncomes}
                         isCitizenRegistered={isCitizenRegistered}
                         setIsCitizenRegistered={setIsCitizenRegistered}
+                        isCitizenLoggedIn={isCitizenLoggedIn}
                         setIsCitizenLoggedIn={setIsCitizenLoggedIn}
-                        setUsername={setUsername}/>
+                    />
                 },
                 {
                     path: "/sign-in",
                     element: <SignIn
-                        setIsCitizenLoggedIn={setIsCitizenLoggedIn}
+                        BACKEND_PORT={BACKEND_PORT}
                         setIsCitizenRegistered={setIsCitizenRegistered}
-                        setUsername={setUsername}/>
+                        setIsCitizenLoggedIn={setIsCitizenLoggedIn}
+                    />
                 },
                 {
                     path: "/sign-out",
@@ -60,27 +103,47 @@ function App() {
                 },
                 {
                     path: "/citizen-profile",
-                    element: <CitizenProfile/>
+                    element: <CitizenProfile
+                        BACKEND_PORT={BACKEND_PORT}
+                        citizen={citizen} setCitizen={setCitizen}
+                        residences={residences} setResidences={setResidences}
+                        mails={mails} setMails={setMails}
+                        phones={phones} setPhones={setPhones}
+                        incomes={incomes} setIncomes={setIncomes}
+                        isCitizenLoggedIn={isCitizenLoggedIn}
+                        isProfilePressed={isProfilePressed}
+                    />
                 },
                 {
                     path: "/topic",
-                    element: <Topic/>
+                    element: <Topic
+                        topic={topic}
+                        setTopic={setTopic}
+                        setTopicSuccessfullySubmitted={setTopicSuccessfullySubmitted}
+                    />
                 },
                 {
                     path: "/survey",
-                    element: <Survey/>
+                    element: <Survey
+                        topic={topic}/>
                 },
                 {
                     path: "/law",
-                    element: <Law/>
+                    element: <Law
+                        topic={topic}
+                        setTopic={setTopic}
+                        topicSuccessfullySubmitted={topicSuccessfullySubmitted}
+                    />
                 },
                 {
                     path: "/vote",
-                    element: <Vote/>
+                    element: <Vote
+                        topic={topic}/>
                 },
                 {
                     path: "/statistic",
-                    element: <Statistic/>
+                    element: <Statistic
+                        topic={topic}/>
                 }
             ]
         }
