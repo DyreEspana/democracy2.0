@@ -2,14 +2,15 @@ import {useEffect} from "react";
 import countryInformationDE from "./CountryInformationDE.jsx";
 import "../../pages/signUp/SignUp.css";
 
-const InputsCitizenPhone = ({
-                                phone, handleChange,
-                                BACKEND_SIGN_UP, existsByPhone, setExistsByPhone
-                            }) => {
+const InputsCitizenPhone = ({BACKEND_PORT, phone, handleChange, existsByPhone, setExistsByPhone}) => {
 
     const fetchPhone = (phone) => {
-        if (phone.length !== 0) {
-            fetch(BACKEND_SIGN_UP + "/phone",
+        let loggedInPhones = "";
+        if (localStorage.getItem("loggedInPhones") !== null) {
+            loggedInPhones = localStorage.getItem("loggedInPhones");
+        }
+        if (phone.length !== 0 && !loggedInPhones.includes(phone)) {
+            fetch(BACKEND_PORT + "/check/phone",
                 {
                     method: "POST",
                     headers: {
@@ -33,7 +34,7 @@ const InputsCitizenPhone = ({
         <label>
             phone type
             <select
-                name="phoneType" id="phoneType"
+                name={"phoneType"} id={"phoneType"}
                 required={true}
                 value={phone.phoneType}
                 onChange={handleChange}
@@ -47,7 +48,7 @@ const InputsCitizenPhone = ({
             <label>
                 main phone number?
                 <select
-                    name="isMain" id="isMain"
+                    name={"isMain"} id={"isMain"}
                     required={true}
                     value={phone.isMain}
                     onChange={handleChange}
@@ -60,7 +61,7 @@ const InputsCitizenPhone = ({
             <label>
                 permission to contact?
                 <select
-                    name="permissionToContact" id="permissionToContact"
+                    name={"permissionToContact"} id={"permissionToContact"}
                     required={true}
                     value={phone.permissionToContact}
                     onChange={handleChange}
@@ -88,7 +89,7 @@ const InputsCitizenPhone = ({
             </label>
             <label>
                 {!existsByPhone ? "phone number" :
-                    <span className={"inputTaken"}>phone number is taken!</span>}
+                    <span className={"incorrectInput"}>phone number is taken!</span>}
                 <input type="text"
                        name="phoneNumber" id="phoneNumber"
                        required={true}

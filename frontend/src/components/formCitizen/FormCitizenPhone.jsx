@@ -1,9 +1,8 @@
 import {useState} from "react";
-import "../../pages/signUp/SignUp.css";
 import InputsCitizenPhone from "./InputsCitizenPhone.jsx";
+import "../../pages/signUp/SignUp.css";
 
-//ToDo find error on edit => Registration get the new value but InputCitizenPhone dont reRender with new value!!!
-const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
+const FormCitizenPhone = ({BACKEND_PORT, phones, setPhones}) => {
 
     const [phone, setPhone] = useState({
         phoneType: "",
@@ -26,18 +25,12 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
     };
 
     const handleChange = event => {
-        const {name, value, id} = event.target;
-        if (id === "areaCode") {
-            console.log("area code")
-            setPhone(prevState => ({...prevState, [name]: " "}));
-            setPhone(prevState => ({...prevState, [name]: value + " "}));
-        } else if (name === "phoneNumber" && !phone.phoneNumber.includes("+")) {
-            console.log("phone with no area code")
-            setPhone(prevState => ({...prevState, [name]: "area code needed!"}));
-        } else {
-            console.log("normal else")
-            setPhone((prevState) => ({...prevState, [name]: value}));
+        let {name, id, value} = event.target;
+        if (name === "phoneNumber") {
+            if (!value.startsWith("+") && !phone.phoneNumber.startsWith("+"))
+                value = "area code needed!";
         }
+        setPhone((prevState) => ({...prevState, [name]: value}));
     };
 
     const handleAdd = () => {
@@ -80,10 +73,10 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
         <h2>phone</h2>
         <div className="column">
             {phones.length > 0 ?
-                phones.map((phone, index) =>
+                phones.map((p, index) =>
                     <div key={index} className={"column formSectionDetail"}>
                         <div className={isEditPressed[index] ? "formDetailList formDetailListOpen" : "formDetailList"}>
-                            <h3>{phone.phoneNumber}</h3>
+                            <h3>{p.phoneNumber}</h3>
                             <button className={"deleteCitizenDetails"}
                                     type={"button"}
                                     onClick={event => handleDelete(event, index)}>delete
@@ -96,9 +89,9 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
                         {isEditPressed[index] ?
                             <div className={"column"}>
                                 <InputsCitizenPhone
+                                    BACKEND_PORT={BACKEND_PORT}
                                     phone={phone}
                                     handleChange={handleChange}
-                                    BACKEND_SIGN_UP={BACKEND_SIGN_UP}
                                     existsByPhone={existsByPhone}
                                     setExistsByPhone={setExistsByPhone}
                                 />
@@ -112,9 +105,9 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
             {isAddPressed ?
                 <div className={"column"}>
                     <InputsCitizenPhone
+                        BACKEND_PORT={BACKEND_PORT}
                         phone={phone}
                         handleChange={handleChange}
-                        BACKEND_SIGN_UP={BACKEND_SIGN_UP}
                         existsByPhone={existsByPhone}
                         setExistsByPhone={setExistsByPhone}
                     />
@@ -133,4 +126,4 @@ const RegistrationCitizenPhone = ({phones, setPhones, BACKEND_SIGN_UP}) => {
     </div>);
 };
 
-export default RegistrationCitizenPhone;
+export default FormCitizenPhone;
