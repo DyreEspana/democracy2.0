@@ -1,0 +1,74 @@
+.mainTopic {
+    display: flex;
+    margin-top: calc(var(--citizenNav-height) * 1.4);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 2.2vh;
+}
+
+.mainTopic h1 {
+    margin: 0;
+}
+
+.mainTopic form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 1.4vh;
+}
+
+.mainTopic label {
+    display: flex;
+    flex-flow: column wrap;
+    text-align: center;
+    gap: 0.3vh;
+}
+
+.mainTopic select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    height: 2.8vw;
+    text-align: center;
+    font-size: 1.4vw;
+}
+
+.mainTopic textarea {
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.4vw;
+}
+
+.mainTopic input {
+    border-radius: 4px;
+    height: 2.2vw;
+    text-align: center;
+    font-size: 1.4vw;
+}
+
+.mainTopic form div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vh;
+    margin-bottom: calc(var(--citizenNav-height) * 1.4);
+    gap: 1vw;
+}
+
+.mainTopic form div button {
+    width: 50%;
+}
+
+.errorMessage {
+    color: rgb(255, 50, 74);
+}
+
+.successMessage {
+    color: lightgreen;
+}

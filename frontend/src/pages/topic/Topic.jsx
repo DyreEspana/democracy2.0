@@ -1,47 +1,33 @@
 import {useState} from "react";
+import countryInformationDE from "../../components/formCitizen/CountryInformationDE.jsx";
 import "./Topic.css";
-import countryInformationDE from "../../../components/signUp/CountryInformationDE.jsx";
 
-const Topic = () => {
-
-        const [topic, setTopic] = useState({
-            country: "",
-            title: "",
-            theme: "",
-            requirements: "",
-            restrictions: "",
-            existingLaw: ""
-        });
-
-        console.log(topic);
+const Topic = ({topic, setTopic, setTopicSuccessfullySubmitted}) => {
 
         const [isTopicOkToSubmit, setIsTopicOkToSubmit] = useState(true);
 
         const handleSubmitTopic = event => {
             event.preventDefault();
-
-            console.log(topic);
-            console.log(JSON.stringify(topic));
+            setTopicSuccessfullySubmitted(false);
 
             if (isTopicOkToSubmit) {
-                fetch('http://localhost:8080/topic',
+                fetch("http://localhost:8080/topic",
                     {
                         method: "POST",
                         headers: {
+                            "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify(topic)
                     })
                     .then((response) => response.json())
                     .then((result) => {
+                        setTopicSuccessfullySubmitted(true);
                         console.log("Successful submit: ", result);
-                        setIsTopicOkToSubmit(true);
                     })
                     .catch((error) => {
                         console.error("Error: ", error);
                     });
-            } else {
-                setIsTopicOkToSubmit(false);
             }
         };
 
@@ -87,18 +73,20 @@ const Topic = () => {
                     </label>
                     <label>
                         requirements
-                        <input type={"text"}
-                               name={"requirements"} id={"requirements"}
-                               required={true}
-                               onInput={handleChange}
+                        <textarea
+                            name={"requirements"} id={"requirements"}
+                            required={true}
+                            rows={3}
+                            onInput={handleChange}
                         />
                     </label>
                     <label>
                         restrictions
-                        <input type={"text"}
-                               name={"restrictions"} id={"restrictions"}
-                               required={true}
-                               onInput={handleChange}
+                        <textarea
+                            name={"restrictions"} id={"restrictions"}
+                            required={true}
+                            rows={3}
+                            onInput={handleChange}
                         />
                     </label>
                     <label>
@@ -109,8 +97,10 @@ const Topic = () => {
                                onInput={handleChange}
                         />
                     </label>
-                    <button type="reset">reset</button>
-                    <button type="submit">submit</button>
+                    <div>
+                        <button type="reset">reset</button>
+                        <button type="submit">submit</button>
+                    </div>
                 </form>
             </div>
         )
