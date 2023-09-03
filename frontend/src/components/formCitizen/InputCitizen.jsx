@@ -1,41 +1,50 @@
 import {useEffect, useState} from "react";
-import RegistrationCitizenResidence from ".//RegistrationCitizenResidence.jsx";
-import RegistrationCitizenMail from ".//RegistrationCitizenMail.jsx";
-import RegistrationCitizenPhone from ".//RegistrationCitizenPhone.jsx";
-import RegistrationCitizenIncome from ".//RegistrationCitizenIncome.jsx";
+import FormCitizenResidence from "./FormCitizenResidence.jsx";
+import FormCitizenMail from "./FormCitizenMail.jsx";
+import FormCitizenPhone from "./FormCitizenPhone.jsx";
+import FormCitizenIncome from "./FormCitizenIncome.jsx";
 import countryInformationDE from ".//CountryInformationDE.jsx";
 import "../../pages/signUp/SignUp.css";
 
 
 const InputCitizen = ({
+                          BACKEND_PORT,
                           citizen, setCitizen,
                           residences, setResidences,
                           mails, setMails,
                           phones, setPhones,
                           incomes, setIncomes,
                           handleSubmit, h1Title,
-                          BACKEND_SIGN_UP
+                          isCitizenLoggedIn
                       }) => {
 
     const [existsByUsername, setExistsByUsername] = useState(false);
+    const [oldPassword, setOldPassword] = useState("");
+    const [passwordMatch, setPasswordMatch] = useState(false);
 
-    const fetchUsername = (username) => {
-        if (username.length !== 0) {
-            fetch(BACKEND_SIGN_UP + "/username",
+    const fetchUsername = (inputUsername) => {
+        let loggedInUsername = "";
+        if (localStorage.getItem("loggedInUsername") !== null) {
+            loggedInUsername = localStorage.getItem("loggedInUsername");
+        }
+        if (inputUsername.length !== 0 && loggedInUsername !== inputUsername) {
+            fetch(BACKEND_PORT + "/check/username",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: username
+                    body: inputUsername
                 })
                 .then(response => response.text())
-                .then(text => {
-                    setExistsByUsername(text === "true")
-                })
+                .then(boolean => setExistsByUsername(boolean === "true"))
                 .catch(error => console.log("Error: ", error))
         }
-    }
+    };
+
+    useEffect(() => {
+        fetchUsername(citizen.username);
+    }, [citizen.username]);
 
     const handleChange = event => {
         let {name, value} = event.target;
@@ -45,14 +54,36 @@ const InputCitizen = ({
         setCitizen((prevState) => ({...prevState, [name]: value}));
     };
 
+    const handleOldPassword = event => {
+        event.preventDefault();
+        setOldPassword(event.target.value);
+    };
+
+    const checkOldPassword = () => {
+        if (oldPassword !== "") {
+            fetch(BACKEND_PORT + "/check/change/old-password",
+                {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: oldPassword
+                })
+                .then(response => response.text())
+                .then(boolean => setPasswordMatch(boolean === "true"))
+                .catch(error => console.error("Error: ", error))
+        }
+    };
+
     useEffect(() => {
-        fetchUsername(citizen.username);
-    }, [citizen.username])
+        checkOldPassword();
+    }, [oldPassword])
 
     return (
         <div className="signUpMainDiv">
             <h1>{h1Title}</h1>
-            <form method={"POST"} onSubmit={handleSubmit}>
+            <form method={isCitizenLoggedIn ? "PUT" : "POST"} onSubmit={handleSubmit}>
                 <div className={"column formSection"}>
                     <label className={"genderLabel"}>
                         gender
@@ -71,7 +102,7 @@ const InputCitizen = ({
                     <div className={"row"}>
                         <label>
                             {!existsByUsername ? "username" :
-                                <span className={"inputTaken"}>username is taken!</span>}
+                                <span className={"incorrectInput"}>username is taken!</span>}
                             <input type="text"
                                    name="username" id="username"
                                    required={true}
@@ -79,37 +110,53 @@ const InputCitizen = ({
                                    onInput={handleChange}
                             />
                         </label>
-                        <label>
-                            password
-                            <input type="password"
-                                   name="password" id="password"
-                                   required={true}
-                                   value={citizen.password}
-                                   onInput={handleChange}
-                            />
-                        </label>
+                        <div className={isCitizenLoggedIn ? "row" : ""}>
+                            {isCitizenLoggedIn ?
+                                <label>
+                                    {oldPassword === "" ? "old password" : passwordMatch ?
+                                        <span className={"correctInput"}>correct password</span>
+                                        : <span className={"incorrectInput"}>wrong password</span>}
+                                    <input type="password"
+                                           name="oldPassword" id="oldPassword"
+                                           required={true}
+                                           onInput={handleOldPassword}
+                                    />
+                                </label>
+                                : ""}
+                            <label>
+                                {isCitizenLoggedIn ? "new password" : "password"}
+                                <input type="password"
+                                       name="password" id="password"
+                                       required={true}
+                                       onInput={handleChange}
+                                />
+                            </label>
+                        </div>
                     </div>
                     <div className={"row"}>
-                        <label>
+                        <label className={"name"}>
                             first name
                             <input type="text"
                                    name="firstName" id="firstName"
                                    required={true}
+                                   value={citizen.firstName}
                                    onInput={handleChange}
                             />
                         </label>
-                        <label>
+                        <label className={"name"}>
                             middle name
                             <input type="text"
                                    name="middleName" id="middleName"
+                                   value={citizen.middleName}
                                    onInput={handleChange}
                             />
                         </label>
-                        <label>
+                        <label className={"name"}>
                             last name
                             <input type="text"
                                    name="lastName" id="lastName"
                                    required={true}
+                                   value={citizen.lastName}
                                    onInput={handleChange}
                             />
                         </label>
@@ -120,6 +167,7 @@ const InputCitizen = ({
                             <input type="date"
                                    name="birthday" id="birthday"
                                    required={true}
+                                   value={citizen.birthday}
                                    onInput={handleChange}
                             />
                         </label>
@@ -128,6 +176,7 @@ const InputCitizen = ({
                             <input type="number"
                                    name="socialSecurityNumber" id="socialSecurityNumber"
                                    required={true}
+                                   value={citizen.socialSecurityNumber}
                                    onInput={handleChange}
                             />
                         </label>
@@ -147,20 +196,24 @@ const InputCitizen = ({
                         </select>
                     </label>
                 </div>
-                <RegistrationCitizenResidence
+                <FormCitizenResidence
                     residences={residences}
-                    setResidences={setResidences}/>
-                <RegistrationCitizenMail
+                    setResidences={setResidences}
+                />
+                <FormCitizenMail
+                    BACKEND_PORT={BACKEND_PORT}
                     mails={mails}
                     setMails={setMails}
-                    BACKEND_SIGN_UP={BACKEND_SIGN_UP}/>
-                <RegistrationCitizenPhone
+                />
+                <FormCitizenPhone
+                    BACKEND_PORT={BACKEND_PORT}
                     phones={phones}
                     setPhones={setPhones}
-                    BACKEND_SIGN_UP={BACKEND_SIGN_UP}/>
-                <RegistrationCitizenIncome
+                />
+                <FormCitizenIncome
                     incomes={incomes}
-                    setIncomes={setIncomes}/>
+                    setIncomes={setIncomes}
+                />
                 <div className={"submitDivButtons row"}>
                     <button type="reset">reset</button>
                     {!existsByUsername ?
@@ -169,7 +222,8 @@ const InputCitizen = ({
                 </div>
             </form>
         </div>
-    );
+    )
+        ;
 };
 
 export default InputCitizen;
