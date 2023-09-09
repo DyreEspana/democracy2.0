@@ -1,74 +1,104 @@
-.mainTopic {
+.mainDivTopic {
+    box-sizing: border-box;
     display: flex;
-    margin-top: calc(var(--citizenNav-height) * 1.4);
     flex-direction: column;
+    justify-content: center;
+    height: 100%;
     align-items: center;
-    justify-content: center;
     text-align: center;
-    gap: 2.2vh;
+    gap: 4vh;
 }
 
-.mainTopic h1 {
-    margin: 0;
-}
-
-.mainTopic form {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-content: center;
-    gap: 1.4vh;
-}
-
-.mainTopic label {
-    display: flex;
-    flex-flow: column wrap;
+h2 {
     text-align: center;
-    gap: 0.3vh;
 }
 
-.mainTopic select {
+h3 {
+    text-align: center;
+}
+
+p {
+    text-align: left;
+}
+
+form {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
-    height: 2.8vw;
-    text-align: center;
-    font-size: 1.4vw;
+    height: 100%;
+    width: 100%;
+    gap: 2vh;
 }
 
-.mainTopic textarea {
-    border-radius: 4px;
+label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-    font-size: 1.4vw;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 0.2vh;
 }
 
-.mainTopic input {
-    border-radius: 4px;
-    height: 2.2vw;
+input, textarea {
+    border-radius: 20px;
+    padding: 1vh 2vw;
     text-align: center;
-    font-size: 1.4vw;
+    font-size: 1.8vw;
+    align-self: center;
 }
 
-.mainTopic form div {
+input {
+    width: 40%;
+}
+
+#optimize {
+    width: 90%;
+}
+
+textarea {
+    width: 80%;
+}
+
+.formButtons {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2vh;
-    margin-bottom: calc(var(--citizenNav-height) * 1.4);
     gap: 1vw;
 }
 
-.mainTopic form div button {
-    width: 50%;
+.lawCreationLog {
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    overflow-y: scroll;
+    gap: 2vh;
+    padding-right: 1vw;
 }
 
-.errorMessage {
-    color: rgb(255, 50, 74);
+.logPart {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
 }
 
-.successMessage {
-    color: lightgreen;
+.msg {
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    border: solid white 1px;
+    border-radius: 20px;
+    padding: 1vh 2vw;
+    gap: 0.5vh;
+}
+
+#citizen {
+    align-self: flex-start;
+    text-align: left;
+}
+
+#ai {
+    align-self: flex-end;
+    text-align: right;
 }
