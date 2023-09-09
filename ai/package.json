@@ -1,0 +1,23 @@
+{
+  "name": "law-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "server to generate laws with openAi",
+  "main": "aiServer.js",
+  "scripts": {
+    "lawAi": "node aiServer.js",
+    "devAi": "nodemon aiServer.js"
+  },
+  "keywords": [],
+  "author": "Dyre España",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
