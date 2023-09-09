@@ -1,7 +1,6 @@
 package com.democracy2_0.backend.data.topic;
 
 import com.democracy2_0.backend.data.citizen.Citizen;
-import com.democracy2_0.backend.data.topic.law.Law;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,13 +24,14 @@ public class Topic {
     private Citizen citizen;
     private String country;
     private String title;
-    private String theme;
-    private String requirements;
-    private String restrictions;
-    private String existingLaw;
-    private boolean isSurveyNeeded;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Law law;
+    @Lob
+    private String goal;
+    @Lob
+    private String law;
+    @Lob
+    private String pro;
+    @Lob
+    private String contra;
     /*
     @JsonManagedReference
     @OneToMany(targetEntity = Survey.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -17,6 +17,7 @@ public class TopicController {
 
     private final TopicRepository topicRepository;
     private final CitizenRepository citizenRepository;
+    //private final BodyConverter bodyConverter;
 
     @GetMapping
     public List<Topic> findAll() {
@@ -30,11 +31,12 @@ public class TopicController {
     }
 
     @PostMapping
-    public Topic save(Authentication authentication, @RequestBody Topic topic) {
+    public String save(Authentication authentication, @RequestBody Topic topic) {
         String username = authentication.getName();
         Optional<Citizen> citizen = citizenRepository.findByUsername(username);
         citizen.ifPresent(topic::setCitizen);
-        return topicRepository.save(topic);
+        topicRepository.save(topic);
+        return "thank you for your participation";
     }
 
     @DeleteMapping("{id}")
