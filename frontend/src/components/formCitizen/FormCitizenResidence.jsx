@@ -72,7 +72,7 @@ const FormCitizenResidence = ({residences, setResidences}) => {
 
     return (<div className={"column formSection"}>
         <h2>residence</h2>
-        <div className={"column"}>
+        <div className={"column formDetailsDiv"}>
             {residences.length > 0 ?
                 residences.map((address, index) =>
                     <div key={index} className={"column formSectionDetail"}>

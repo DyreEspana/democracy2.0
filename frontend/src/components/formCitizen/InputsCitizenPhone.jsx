@@ -22,7 +22,7 @@ const InputsCitizenPhone = ({BACKEND_PORT, phone, handleChange, existsByPhone, s
                 .then(text => {
                     setExistsByPhone(text === "true")
                 })
-                .catch(error => console.log("Error: ", error))
+                .catch(error => console.error("Error: ", error))
         }
     }
 

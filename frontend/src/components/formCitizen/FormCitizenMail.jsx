@@ -66,7 +66,7 @@ const FormCitizenMail = ({BACKEND_PORT, mails, setMails}) => {
 
     return (<div className={"column formSection"}>
         <h2>e-mail</h2>
-        <div className="column">
+        <div className="column formDetailsDiv">
             {mails.length > 0 ?
                 mails.map((e_mail, index) =>
                     <div key={index} className={"column formSectionDetail"}>

@@ -33,7 +33,7 @@ const SignIn = ({BACKEND_PORT, setIsCitizenLoggedIn, setIsCitizenRegistered}) =>
                     localStorage.setItem("jwt", jwt);
                     handleSignIn().then(r => console.log("Successful login " + r));
                 })
-                .catch(error => console.log("ERROR: " + error));
+                .catch(error => console.error("ERROR: " + error));
         }
     };
 
@@ -44,17 +44,20 @@ const SignIn = ({BACKEND_PORT, setIsCitizenLoggedIn, setIsCitizenRegistered}) =>
         return fetch(BACKEND_SIGN_IN + "/authorized", {method: "GET", headers: headers})
             .then(response => response.json())
             .then(citizen => {
-                setResMessage("Successful login");
                 localStorage.setItem("loggedInUsername", citizen.username);
                 let resMails = citizen.mails.map(mail => mail.mail);
                 localStorage.setItem("loggedInMails", resMails.join());
                 let resPhones = citizen.phones.map(phone => phone.phoneNumber);
                 localStorage.setItem("loggedInPhones", resPhones.join());
+                localStorage.setItem("country", citizen.nationality);
+                localStorage.setItem("isCitizenRegistered", "true");
+                localStorage.setItem("isCitizenLoggedIn", "true");
+                setResMessage("Successful login");
                 setIsCitizenLoggedIn(true);
                 setIsCitizenRegistered(true);
                 navigate("/dashboard")
             })
-            .catch(error => console.log("ERROR: " + error));
+            .catch(error => console.error("ERROR: " + error));
     };
 
     return (

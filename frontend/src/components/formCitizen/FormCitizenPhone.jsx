@@ -71,7 +71,7 @@ const FormCitizenPhone = ({BACKEND_PORT, phones, setPhones}) => {
 
     return (<div className={"column formSection"}>
         <h2>phone</h2>
-        <div className="column">
+        <div className="column formDetailsDiv">
             {phones.length > 0 ?
                 phones.map((p, index) =>
                     <div key={index} className={"column formSectionDetail"}>

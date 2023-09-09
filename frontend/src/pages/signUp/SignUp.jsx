@@ -11,8 +11,7 @@ const SignUp = ({
                     mails, setMails,
                     phones, setPhones,
                     incomes, setIncomes,
-                    isCitizenRegistered, setIsCitizenRegistered,
-                    isCitizenLoggedIn, setIsCitizenLoggedIn,
+                    isCitizenRegistered, setIsCitizenRegistered, setIsCitizenLoggedIn,
                 }) => {
 
     const BACKEND_SIGN_UP = BACKEND_PORT + "/auth/sign-up";
@@ -42,6 +41,9 @@ const SignUp = ({
                     localStorage.setItem("loggedInMails", resMails.join());
                     let resPhones = resCitizen.phones.map(phone => phone.phoneNumber);
                     localStorage.setItem("loggedInPhones", resPhones.join());
+                    localStorage.setItem("country", citizen.nationality);
+                    localStorage.setItem("isCitizenRegistered", "true");
+                    localStorage.setItem("isCitizenLoggedIn", "true");
                     setIsCitizenRegistered(true);
                     setIsCitizenLoggedIn(true);
                     getToken().then(r => console.log("got token " + r));
@@ -65,7 +67,7 @@ const SignUp = ({
                 }
                 localStorage.setItem("jwt", jwt);
             })
-            .catch(error => console.log("ERROR: " + error));
+            .catch(error => console.error("ERROR: " + error));
     }
 
     isCitizenRegistered &&
@@ -89,7 +91,6 @@ const SignUp = ({
             phones={phones} setPhones={setPhones}
             incomes={incomes} setIncomes={setIncomes}
             handleSubmit={handleSubmit} h1Title={"Register"}
-            isCitizenLoggedIn={isCitizenLoggedIn}
         />
     );
 };

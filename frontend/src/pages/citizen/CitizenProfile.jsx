@@ -9,7 +9,6 @@ const CitizenProfile = ({
                             mails, setMails,
                             phones, setPhones,
                             incomes, setIncomes,
-                            isCitizenLoggedIn,
                             isProfilePressed,
                         }) => {
 
@@ -73,7 +72,6 @@ const CitizenProfile = ({
             phones={phones} setPhones={setPhones}
             incomes={incomes} setIncomes={setIncomes}
             handleSubmit={handleSubmit} h1Title={"Edit Profile"}
-            isCitizenLoggedIn={isCitizenLoggedIn}
         />
     )
 }

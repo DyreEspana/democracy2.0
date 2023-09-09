@@ -15,7 +15,6 @@ const InputCitizen = ({
                           phones, setPhones,
                           incomes, setIncomes,
                           handleSubmit, h1Title,
-                          isCitizenLoggedIn
                       }) => {
 
     const [existsByUsername, setExistsByUsername] = useState(false);
@@ -38,7 +37,7 @@ const InputCitizen = ({
                 })
                 .then(response => response.text())
                 .then(boolean => setExistsByUsername(boolean === "true"))
-                .catch(error => console.log("Error: ", error))
+                .catch(error => console.error("Error: ", error))
         }
     };
 
@@ -83,7 +82,8 @@ const InputCitizen = ({
     return (
         <div className="signUpMainDiv">
             <h1>{h1Title}</h1>
-            <form method={isCitizenLoggedIn ? "PUT" : "POST"} onSubmit={handleSubmit}>
+            <form method={localStorage.getItem("isCitizenLoggedIn") === "true" ? "PUT" : "POST"}
+                  onSubmit={handleSubmit}>
                 <div className={"column formSection"}>
                     <label className={"genderLabel"}>
                         gender
@@ -110,8 +110,8 @@ const InputCitizen = ({
                                    onInput={handleChange}
                             />
                         </label>
-                        <div className={isCitizenLoggedIn ? "row" : ""}>
-                            {isCitizenLoggedIn ?
+                        <div className={localStorage.getItem("isCitizenLoggedIn") === "true" ? "row" : ""}>
+                            {localStorage.getItem("isCitizenLoggedIn") === "true" ?
                                 <label>
                                     {oldPassword === "" ? "old password" : passwordMatch ?
                                         <span className={"correctInput"}>correct password</span>
@@ -124,7 +124,7 @@ const InputCitizen = ({
                                 </label>
                                 : ""}
                             <label>
-                                {isCitizenLoggedIn ? "new password" : "password"}
+                                {localStorage.getItem("isCitizenLoggedIn") === "true" ? "new password" : "password"}
                                 <input type="password"
                                        name="password" id="password"
                                        required={true}

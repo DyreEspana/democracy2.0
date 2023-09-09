@@ -19,7 +19,7 @@ const InputsCitizenMail = ({BACKEND_PORT, eMail, handleChange, existsByMail, set
                 })
                 .then(response => response.text())
                 .then(text => setExistsByMail(text === "true"))
-                .catch(error => console.log("Error: ", error))
+                .catch(error => console.error("Error: ", error))
         }
     }
 

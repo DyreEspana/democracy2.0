@@ -9,7 +9,6 @@ import SignIn from "./pages/signIn/SignIn.jsx";
 import Dashboard from "./pages/citizen/Dashboard.jsx";
 import CitizenProfile from "./pages/citizen/CitizenProfile.jsx";
 import Topic from "./pages/topic/Topic.jsx";
-import Survey from "./pages/topic/survey/Survey.jsx";
 import Law from "./pages/topic/law/Law.jsx";
 import Vote from "./pages/topic/vote/Vote.jsx";
 import Statistic from "./pages/topic/statistic/Statistic.jsx";
@@ -41,34 +40,30 @@ function App() {
 
     const [isProfilePressed, setIsProfilePressed] = useState(false);
 
-    const [topic, setTopic] = useState({
-        country: "",
-        title: "",
-        theme: "",
-        requirements: "",
-        restrictions: "",
-        existingLaw: ""
-    });
-    const [topicSuccessfullySubmitted, setTopicSuccessfullySubmitted] = useState(false);
+    //ToDo maybe i dont need this
+    const [law, setLaw] = useState("");
+    const [lawProContra, setLawProContra] = useState("");
+
+    const handleCloseProfileMenu = event => {
+        setIsProfilePressed(false);
+    }
 
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Navigation
-                isCitizenRegistered={isCitizenRegistered}
                 isCitizenLoggedIn={isCitizenLoggedIn}
+                isCitizenRegistered={isCitizenRegistered}
                 setIsCitizenLoggedIn={setIsCitizenLoggedIn}
-                setCitizen={setCitizen}
-                setResidences={setResidences}
-                setMails={setMails}
-                setPhones={setPhones}
-                setIncomes={setIncomes}
+                setIsCitizenRegistered={setIsCitizenRegistered}
                 setIsProfilePressed={setIsProfilePressed}
             />,
             children: [
                 {
                     path: "/",
-                    element: <Home/>
+                    element: <Home
+                        handleCloseProfileMenu={handleCloseProfileMenu}
+                    />
                 },
                 {
                     path: "/sign-up",
@@ -95,16 +90,20 @@ function App() {
                 },
                 {
                     path: "/sign-out",
-                    element: <Home/>,
+                    element: <Home
+                    />,
                 },
                 {
                     path: "/dashboard",
-                    element: <Dashboard/>
+                    element: <Dashboard
+                        handleCloseProfileMenu={handleCloseProfileMenu}
+                    />
                 },
                 {
                     path: "/citizen-profile",
                     element: <CitizenProfile
                         BACKEND_PORT={BACKEND_PORT}
+                        handleCloseProfileMenu={handleCloseProfileMenu}
                         citizen={citizen} setCitizen={setCitizen}
                         residences={residences} setResidences={setResidences}
                         mails={mails} setMails={setMails}
@@ -117,33 +116,31 @@ function App() {
                 {
                     path: "/topic",
                     element: <Topic
-                        topic={topic}
-                        setTopic={setTopic}
-                        setTopicSuccessfullySubmitted={setTopicSuccessfullySubmitted}
+                        BACKEND_PORT={BACKEND_PORT}
+                        handleCloseProfileMenu={handleCloseProfileMenu}
                     />
-                },
-                {
-                    path: "/survey",
-                    element: <Survey
-                        topic={topic}/>
                 },
                 {
                     path: "/law",
                     element: <Law
-                        topic={topic}
-                        setTopic={setTopic}
-                        topicSuccessfullySubmitted={topicSuccessfullySubmitted}
+                        handleCloseProfileMenu={handleCloseProfileMenu}
+                        law={law}
+                        setLaw={setLaw}
+                        lawProContra={lawProContra}
+                        setLawProContra={setLawProContra}
                     />
                 },
                 {
                     path: "/vote",
                     element: <Vote
-                        topic={topic}/>
+                        handleCloseProfileMenu={handleCloseProfileMenu}
+                    />
                 },
                 {
                     path: "/statistic",
                     element: <Statistic
-                        topic={topic}/>
+                        handleCloseProfileMenu={handleCloseProfileMenu}
+                    />
                 }
             ]
         }

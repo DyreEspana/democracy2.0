@@ -1,9 +1,9 @@
 import {Link, Outlet} from "react-router-dom";
-import "./Navigation.css";
 import {useState} from "react";
 import CitizenMenuModal from "./CitizenMenuModal.jsx";
+import "./Navigation.css";
 
-const Navigation = ({isCitizenRegistered, isCitizenLoggedIn, setIsCitizenLoggedIn, setIsProfilePressed}) => {
+const Navigation = ({setIsProfilePressed, setIsCitizenLoggedIn, setIsCitizenRegistered}) => {
 
     const [isFeatureOpen, setIsFeatureOpen] = useState(true);
     const [isCitizenMenuOpen, setIsCitizenMenuOpen] = useState(false);
@@ -28,17 +28,17 @@ const Navigation = ({isCitizenRegistered, isCitizenLoggedIn, setIsCitizenLoggedI
                             </svg>
                             Home</Link>
                     </li>
-                    {!isCitizenLoggedIn && !isCitizenRegistered &&
+                    {localStorage.getItem("isCitizenLoggedIn") !== "true" && localStorage.getItem("isCitizenRegistered") !== "true" &&
                         <li>
                             <Link to="/sign-up">Registration</Link>
                         </li>
                     }
-                    {!isCitizenLoggedIn &&
+                    {localStorage.getItem("isCitizenLoggedIn") !== "true" &&
                         <li>
                             <Link to="/sign-in">Login</Link>
                         </li>
                     }
-                    {isCitizenLoggedIn &&
+                    {localStorage.getItem("isCitizenLoggedIn") === "true" &&
                         <li className="account"
                             onClick={handleToggleMenu}>{localStorage.getItem("loggedInUsername")}
                             <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
@@ -56,10 +56,11 @@ const Navigation = ({isCitizenRegistered, isCitizenLoggedIn, setIsCitizenLoggedI
                     setIsCitizenMenuOpen={setIsCitizenMenuOpen}
                     setIsProfilePressed={setIsProfilePressed}
                     setIsCitizenLoggedIn={setIsCitizenLoggedIn}
+                    setIsCitizenRegistered={setIsCitizenRegistered}
                 />
                 : ""}
 
-            {isCitizenLoggedIn ?
+            {localStorage.getItem("isCitizenLoggedIn") === "true" ?
                 <nav className={"featureNav"}>
                     <ul>
                         <li id={"dashboard"}>
@@ -142,7 +143,10 @@ const Navigation = ({isCitizenRegistered, isCitizenLoggedIn, setIsCitizenLoggedI
 
                 </nav>
                 : ""}
-            <Outlet/>
+            <div className={localStorage.getItem("isCitizenLoggedIn") === "true" ?
+                "outletMainDiv withSideNav" : "outletMainDiv noSideNav"}>
+                <Outlet/>
+            </div>
         </>
     );
 };

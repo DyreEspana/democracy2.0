@@ -64,7 +64,7 @@ const FormCitizenIncome = ({incomes, setIncomes}) => {
 
     return (<div className={"column formSection"}>
         <h2>income</h2>
-        <div className="column">
+        <div className="column formDetailsDiv">
             {incomes.length > 0 ?
                 incomes.map((salary, index) =>
                     <div key={index}

@@ -1,8 +1,10 @@
 import "./Home.css";
 
-const Home = () => {
+const Home = ({handleCloseProfileMenu}) => {
     return (
-        <div className={"mainDivHome"}>
+        <div className={"mainDivHome"}
+             onClick={handleCloseProfileMenu}
+        >
             <header>
                 <div>
                     <h1>Demokratie 2.0</h1>

@@ -111,9 +111,7 @@ svg {
 .featureNav {
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: var(--citizenNav-height);
-    left: 0;
+    margin-top: var(--citizenNav-height);
     height: calc(100vh - var(--citizenNav-height));
     align-content: center;
     justify-content: center;
@@ -178,4 +176,20 @@ li:hover svg {
 
 .open {
     scale: -1 1;
+}
+
+.outletMainDiv{
+    margin-top: var(--citizenNav-height);
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.noSideNav{
+    padding: 4vh 20vw;
+}
+
+.withSideNav{
+    padding: 4vh 10vw 4vh 5vw;
 }
