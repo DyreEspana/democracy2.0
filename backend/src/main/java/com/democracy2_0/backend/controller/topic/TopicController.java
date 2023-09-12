@@ -17,11 +17,13 @@ public class TopicController {
 
     private final TopicRepository topicRepository;
     private final CitizenRepository citizenRepository;
-    //private final BodyConverter bodyConverter;
 
     @GetMapping
     public List<Topic> findAll() {
-        return topicRepository.findAll();
+        System.out.println("findAllTopics");
+        List<Topic> test = topicRepository.findAll();
+        System.out.println(test);
+        return test;
     }
 
     @GetMapping("{id}")

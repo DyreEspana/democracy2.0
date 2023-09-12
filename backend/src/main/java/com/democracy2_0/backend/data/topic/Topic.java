@@ -19,7 +19,7 @@ public class Topic {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDateTime submitDate = LocalDateTime.now();
+    private final LocalDateTime submitDate = LocalDateTime.now();
     @ManyToOne
     private Citizen citizen;
     private String country;

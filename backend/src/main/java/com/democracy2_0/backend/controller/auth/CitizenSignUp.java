@@ -1,7 +1,7 @@
 package com.democracy2_0.backend.controller.auth;
 
 import com.democracy2_0.backend.configuration.JwtGenerator;
-import com.democracy2_0.backend.controller.citizen.NewCitizenSave;
+import com.democracy2_0.backend.service.citizen.NewCitizenSave;
 import com.democracy2_0.backend.data.citizen.Citizen;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

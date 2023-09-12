@@ -1,5 +1,6 @@
-package com.democracy2_0.backend.controller.citizen;
+package com.democracy2_0.backend.service.citizen;
 
+import com.democracy2_0.backend.controller.citizen.CitizenRepository;
 import com.democracy2_0.backend.controller.citizen.contact.MailRepository;
 import com.democracy2_0.backend.controller.citizen.contact.PhoneRepository;
 import com.democracy2_0.backend.controller.citizen.income.IncomeRepository;

@@ -46,11 +46,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/check/*").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/check/change/old-password").authenticated();
-                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/auth/sign-up").authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/auth/sign-in/**").authenticated();
-                    auth.requestMatchers(HttpMethod.PUT, "/citizen/edit").authenticated();
                     auth.requestMatchers(HttpMethod.GET, "/citizen/edit").authenticated();
+                    auth.requestMatchers(HttpMethod.PUT, "/citizen/edit").authenticated();
+                    auth.requestMatchers(HttpMethod.GET, "/topic").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/topic").hasAuthority("SCOPE_TOPIC");
                 })
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

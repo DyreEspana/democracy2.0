@@ -1,6 +1,6 @@
 package com.democracy2_0.backend.runner;
 
-import com.democracy2_0.backend.controller.citizen.NewCitizenSave;
+import com.democracy2_0.backend.service.citizen.NewCitizenSave;
 import com.democracy2_0.backend.data.citizen.Citizen;
 import com.democracy2_0.backend.data.citizen.contact.Mail;
 import com.democracy2_0.backend.data.citizen.contact.Phone;
@@ -18,8 +18,9 @@ import java.util.Set;
 
 @Configuration
 public class CitizenGenerator {
+
     @Bean
-    ApplicationRunner generateCitizen(NewCitizenSave newCitizenSave, PasswordEncoder passwordEncoder) {
+    ApplicationRunner generateCitizen(NewCitizenSave newCitizenSave, PasswordEncoder passwordEncoder, TopicGenerator topicGenerator) {
         return args -> {
             Residence residence1 = Residence.builder()
                     .residenceType("MAIN_RESIDENCE")
@@ -96,6 +97,7 @@ public class CitizenGenerator {
                     .incomes(List.of(dyreIncome1, dyreIncome2, dyreIncome3))
                     .build();
             newCitizenSave.save(dyre);
+            topicGenerator.generateTopic(dyre);
         };
     }
 }

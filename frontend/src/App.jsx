@@ -96,6 +96,7 @@ function App() {
                 {
                     path: "/dashboard",
                     element: <Dashboard
+                        BACKEND_PORT={BACKEND_PORT}
                         handleCloseProfileMenu={handleCloseProfileMenu}
                     />
                 },

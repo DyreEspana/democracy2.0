@@ -79,7 +79,6 @@ const Topic = ({BACKEND_PORT}) => {
 
     const onSave = async event => {
         event.preventDefault();
-        navigate("/dashboard");
 
         try {
             const response = await fetch(AI_PORT + "/law-pro-contra", {
@@ -115,6 +114,9 @@ const Topic = ({BACKEND_PORT}) => {
         }
         let contra = contraArray.join("\n");
 
+        //ToDo delete if we did new runner
+        console.log({...topic, law: laws[laws.length - 1].content, pro, contra})
+
         fetch(BACKEND_PORT + "/topic",
             {
                 method: "POST",
@@ -125,10 +127,11 @@ const Topic = ({BACKEND_PORT}) => {
                 body: JSON.stringify({...topic, law: laws[laws.length - 1].content, pro, contra})
             })
             .then(response => response.text())
-            .then(resText => console.log(resText))
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+            .then(resText => {
+                console.log(resText);
+                navigate("/dashboard");
+            })
+            .catch(error => console.error("Error: " + error));
     }
 
     return (
